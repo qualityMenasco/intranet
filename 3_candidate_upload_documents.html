@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Requested Documents - Wireframe Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; padding: 40px; color: #111827; }
+        .browser-screen { background: white; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #e5e7eb; max-width: 800px; margin: 0 auto; }
+        .browser-header { background: #f9fafb; padding: 12px 20px; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; } .dot-yellow { background: #ffbd2e; } .dot-green { background: #27c93f; }
+        .upload-section { border: 2px dashed #e2e8f0; border-radius: 12px; padding: 24px; background-color: #f8fafc; transition: all 0.2s; }
+        .upload-section:hover { border-color: #3b82f6; background-color: #f1f5f9; }
+    </style>
+</head>
+<body>
+<div class="browser-screen">
+    <div class="browser-header">
+        <div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div>
+        <div class="ml-4 text-xs text-gray-400 font-mono">https://recruitment.software/secure-upload/ahmed-khan</div>
+    </div>
+    <div class="p-10">
+        <div class="mb-10 text-center">
+            <h1 class="text-3xl font-bold text-gray-900">Upload Requested Documents</h1>
+            <p class="text-gray-500 mt-2">Please upload the documents requested by HR to continue your application process.</p>
+        </div>
+
+        <!-- Candidate Info Card -->
+        <div class="bg-blue-600 text-white rounded-xl p-6 mb-10 shadow-lg">
+            <div class="grid grid-cols-2 gap-y-4 gap-x-6">
+                <div><label class="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-1">Candidate Name</label><div class="text-lg font-bold">Ahmed Khan</div></div>
+                <div><label class="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-1">Applied Job</label><div class="text-sm font-medium">Software Engineer</div></div>
+                <div><label class="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-1">Organization</label><div class="text-sm font-medium">Menasco</div></div>
+                <div><label class="block text-[10px] font-bold text-blue-200 uppercase tracking-widest mb-1">Department</label><div class="text-sm font-medium">IT</div></div>
+            </div>
+        </div>
+
+        <!-- Requested Documents Form -->
+        <div class="space-y-8">
+            <div class="section-title text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Requested Documents</div>
+            
+            <!-- Document 1 -->
+            <div class="upload-section">
+                <div class="flex justify-between items-center mb-3">
+                    <label class="text-sm font-bold text-gray-700">Passport Copy <span class="text-red-500">*</span></label>
+                </div>
+                <div class="flex gap-4">
+                    <input type="file" class="flex-grow text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg text-xs font-bold">Upload</button>
+                </div>
+            </div>
+
+            <!-- Document 2 -->
+            <div class="upload-section">
+                <div class="flex justify-between items-center mb-3">
+                    <label class="text-sm font-bold text-gray-700">Latest Visit Visa Copy</label>
+                </div>
+                <div class="flex gap-4">
+                    <input type="file" class="flex-grow text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg text-xs font-bold">Upload</button>
+                </div>
+            </div>
+
+            <!-- Document 3 -->
+            <div class="upload-section">
+                <div class="flex justify-between items-center mb-3">
+                    <label class="text-sm font-bold text-gray-700">Last Cancelled Visa Copy</label>
+                </div>
+                <div class="flex gap-4">
+                    <input type="file" class="flex-grow text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg text-xs font-bold">Upload</button>
+                </div>
+            </div>
+
+            <!-- Document 4 -->
+            <div class="upload-section">
+                <div class="flex justify-between items-center mb-3">
+                    <label class="text-sm font-bold text-gray-700">Passport Size Photo</label>
+                </div>
+                <div class="flex gap-4">
+                    <input type="file" class="flex-grow text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg text-xs font-bold">Upload</button>
+                </div>
+            </div>
+
+            <!-- Other Document -->
+            <div class="upload-section">
+                <div class="mb-3">
+                    <label class="text-sm font-bold text-gray-700">Other Document</label>
+                    <input type="text" placeholder="Document Name" class="mt-2 w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div class="flex gap-4">
+                    <input type="file" class="flex-grow text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg text-xs font-bold">Upload</button>
+                </div>
+            </div>
+
+            <!-- Declaration -->
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-10">
+                <label class="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" class="w-5 h-5 rounded text-blue-600 focus:ring-blue-500 border-gray-300">
+                    <span class="text-sm font-medium text-gray-700">I confirm that the uploaded documents are valid and correct.</span>
+                </label>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="flex justify-between items-center pt-8 border-t border-gray-200">
+                <button class="px-8 py-3 border border-gray-300 rounded-lg font-bold text-gray-700 hover:bg-gray-50 transition-colors">Cancel</button>
+                <div class="flex gap-4">
+                    <button class="px-8 py-3 bg-white border border-gray-300 rounded-lg font-bold text-gray-700 hover:bg-gray-50 transition-colors">Save Draft</button>
+                    <button class="px-8 py-3 bg-blue-600 text-white rounded-lg font-bold shadow-md hover:bg-blue-700 transition-colors">Submit Documents</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
