@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Engineer - Menasco</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --accent-bg: #eff6ff;
+            --accent-text: #1e40af;
+            --section-title-bg: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #cbd5e1; /* Desktop background color */
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Computer Screen Container */
+        .screen-container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 12px solid #334155; /* Monitor frame */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Browser/App Header */
+        .app-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 32px;
+        }
+
+        .app-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .app-header p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* Top Summary Bar */
+        .summary-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 16px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .summary-item {
+            background-color: var(--accent-bg);
+            color: var(--accent-text);
+            padding: 6px 16px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            padding: 32px;
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: white;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--section-title-bg);
+            display: block;
+        }
+
+        .section-content {
+            font-size: 15px;
+            color: #334155;
+        }
+
+        .section-content p {
+            margin-bottom: 16px;
+        }
+
+        .section-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .section-content li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+        }
+
+        .section-content li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 1;
+            top: 0;
+        }
+
+        /* Grid for Skills & Qualifications */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .info-sub-section {
+            margin-bottom: 20px;
+        }
+
+        .info-label {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Footer Actions */
+        .footer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 32px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-outline {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .screen-container {
+                border: none;
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .main-content {
+                overflow: visible;
+            }
+            .btn-primary {
+                border: 1px solid #000;
+                color: black;
+                background: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen-container">
+        <!-- App Header -->
+        <header class="app-header">
+            <h1>Software Engineer</h1>
+            <p>Explore the role details and apply if your profile matches the requirements.</p>
+            
+            <!-- Top Summary Bar -->
+            <div class="summary-bar">
+                <span class="summary-item">Permanent</span>
+                <span class="summary-item">Menasco</span>
+                <span class="summary-item">IT</span>
+                <span class="summary-item">Hybrid</span>
+                <span class="summary-item">Dubai</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- SECTION 1: Job Summary -->
+            <section class="content-section">
+                <span class="section-title">SECTION 1: Job Summary</span>
+                <div class="section-content">
+                    <p>We are looking for a Software Engineer to design, build, and maintain company applications and support internal digital transformation initiatives.</p>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Responsibilities -->
+            <section class="content-section">
+                <span class="section-title">SECTION 2: Responsibilities</span>
+                <div class="section-content">
+                    <ul>
+                        <li>Develop and maintain software applications</li>
+                        <li>Collaborate with internal teams</li>
+                        <li>Troubleshoot bugs and improve performance</li>
+                        <li>Write clean and maintainable code</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Skills & Qualifications -->
+            <section class="content-section">
+                <span class="section-title">SECTION 3: Skills & Qualifications</span>
+                <div class="section-content">
+                    <div class="info-grid">
+                        <div>
+                            <div class="info-sub-section">
+                                <span class="info-label">Required Skills:</span>
+                                <ul>
+                                    <li>Java</li>
+                                    <li>SQL</li>
+                                    <li>REST APIs</li>
+                                    <li>Problem-solving</li>
+                                </ul>
+                            </div>
+                            <div class="info-sub-section">
+                                <span class="info-label">Preferred Skills:</span>
+                                <ul>
+                                    <li>Spring Boot</li>
+                                    <li>Docker</li>
+                                    <li>AWS</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="info-sub-section">
+                                <span class="info-label">Experience Level:</span>
+                                <p>2-4 years</p>
+                            </div>
+                            <div class="info-sub-section">
+                                <span class="info-label">Education:</span>
+                                <p>Bachelor's Degree in Computer Science or related field</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Compensation & Benefits -->
+            <section class="content-section">
+                <span class="section-title">SECTION 4: Compensation & Benefits</span>
+                <div class="section-content">
+                    <div class="info-grid">
+                        <div>
+                            <span class="info-label">Compensation Range:</span>
+                            <p>AED 8,000 - 12,000</p>
+                        </div>
+                        <div>
+                            <span class="info-label">Benefits / Perks:</span>
+                            <ul>
+                                <li>Medical Insurance</li>
+                                <li>Performance Bonus</li>
+                                <li>Annual Leave</li>
+                                <li>Professional Development Support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Actions -->
+        <footer class="footer-actions">
+            <a href="#" class="btn btn-outline">Back to Job Listings</a>
+            <a href="#" class="btn btn-primary">Apply Now</a>
+        </footer>
+    </div>
+
+</body>
+</html>
