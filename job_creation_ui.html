@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Job - Admin Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
+            --section-bg: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #cbd5e1; /* Desktop background color */
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Computer Screen Container */
+        .screen-container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 12px solid #334155; /* Monitor frame */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Browser/App Header */
+        .app-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .header-left p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            padding: 32px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background-color: var(--section-bg);
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .section-body {
+            padding: 24px;
+        }
+
+        /* Grid Layout for Form Fields */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        input, select, textarea {
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
+            background-color: var(--input-bg);
+            color: var(--text-main);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* List Input with Button */
+        .list-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-add {
+            padding: 0 16px;
+            background-color: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .btn-add:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* Footer Actions */
+        .footer-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 20px 32px;
+            background: white;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+        }
+
+        .btn-cancel {
+            background-color: transparent;
+            color: var(--text-muted);
+        }
+
+        .btn-cancel:hover {
+            color: var(--text-main);
+            text-decoration: underline;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .screen-container {
+                border: none;
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .main-content {
+                overflow: visible;
+            }
+            .btn {
+                border: 1px solid #ccc;
+                color: black;
+                background: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen-container">
+        <!-- App Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1>Create New Job</h1>
+                <p>Fill in the required details to create and publish a job.</p>
+            </div>
+            <div class="header-right">
+                <span class="status-label">Status:</span>
+                <select style="width: 120px;">
+                    <option>Draft</option>
+                    <option>Active</option>
+                    <option>Inactive</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- SECTION 1: Job Basics -->
+            <section class="form-section">
+                <div class="section-header">SECTION 1: Job Basics</div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Job Title</label>
+                            <input type="text" placeholder="e.g. Software Engineer">
+                        </div>
+                        <div class="form-group">
+                            <label>Employment Type</label>
+                            <select>
+                                <option>Permanent</option>
+                                <option>Temporary</option>
+                                <option>Internship</option>
+                                <option>Contract</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Organization</label>
+                            <select>
+                                <option>Menasco</option>
+                                <option>Macs</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select>
+                                <option>IT</option>
+                                <option>HR</option>
+                                <option>Finance</option>
+                                <option>Marketing</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Openings</label>
+                            <input type="number" placeholder="e.g. 1">
+                        </div>
+                        <div class="form-group">
+                            <label>Work Mode</label>
+                            <select>
+                                <option>Remote</option>
+                                <option>Hybrid</option>
+                                <option>On-site</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <select>
+                                <option>New York, USA</option>
+                                <option>London, UK</option>
+                                <option>Remote</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Candidate-Facing Job Content -->
+            <section class="form-section">
+                <div class="section-header">SECTION 2: Candidate-Facing Job Content</div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Job Summary</label>
+                            <textarea placeholder="Provide a short overview of the role..."></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Responsibilities 1</label>
+                            <div class="list-input-group">
+                                <input type="text" placeholder="e.g. Develop and maintain web applications">
+                                <button class="btn-add">+</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Required Skills 1</label>
+                            <div class="list-input-group">
+                                <input type="text" placeholder="e.g. Proficiency in React and Node.js">
+                                <button class="btn-add">+</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Preferred Skills 1</label>
+                            <div class="list-input-group">
+                                <input type="text" placeholder="e.g. Experience with AWS or Docker">
+                                <button class="btn-add">+</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Experience Level</label>
+                            <select>
+                                <option>Entry Level</option>
+                                <option>Mid Level</option>
+                                <option>Senior Level</option>
+                                <option>Lead / Manager</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Education</label>
+                            <input type="text" placeholder="e.g. Bachelor's in Computer Science">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Compensation Range (optional)</label>
+                            <input type="text" placeholder="e.g. $80,000 - $120,000 per year">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Benefits / Perks (optional)</label>
+                            <textarea placeholder="e.g. Health insurance, 401k, Flexible hours..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Actions -->
+        <footer class="footer-actions">
+            <button class="btn btn-cancel">Cancel</button>
+            <button class="btn btn-outline">Save Draft</button>
+            <button class="btn btn-outline">Preview</button>
+            <button class="btn btn-primary">Save & Publish</button>
+        </footer>
+    </div>
+
+</body>
+</html>
