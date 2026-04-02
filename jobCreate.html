@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Job - Admin Dashboard</title>
+    <title>Create New Job - HR Portal</title>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -25,7 +25,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #cbd5e1; /* Desktop background color */
+            background-color: #cbd5e1;
             color: var(--text-main);
             line-height: 1.5;
             padding: 40px;
@@ -34,20 +34,18 @@
             min-height: 100vh;
         }
 
-        /* Computer Screen Container */
         .screen-container {
             width: 100%;
             max-width: 1200px;
             background-color: var(--bg-color);
             border-radius: 12px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 12px solid #334155; /* Monitor frame */
+            border: 12px solid #334155;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        /* Browser/App Header */
         .app-header {
             background-color: #ffffff;
             border-bottom: 1px solid var(--border-color);
@@ -55,6 +53,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 16px;
         }
 
         .header-left h1 {
@@ -81,20 +80,18 @@
             color: var(--text-muted);
         }
 
-        /* Main Content Area */
         .main-content {
             padding: 32px;
             flex-grow: 1;
             overflow-y: auto;
         }
 
-        /* Form Sections */
         .form-section {
             background: var(--card-bg);
             border-radius: 8px;
             border: 1px solid var(--border-color);
             margin-bottom: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             overflow: hidden;
         }
 
@@ -113,7 +110,6 @@
             padding: 24px;
         }
 
-        /* Grid Layout for Form Fields */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -146,12 +142,21 @@
             color: var(--text-main);
         }
 
+        select {
+            cursor: pointer;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
         textarea {
             resize: vertical;
             min-height: 100px;
         }
 
-        /* List Input with Button */
         .list-input-group {
             display: flex;
             gap: 10px;
@@ -163,7 +168,7 @@
             border: 1px solid var(--border-color);
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-main);
         }
 
@@ -171,7 +176,6 @@
             background-color: #e2e8f0;
         }
 
-        /* Footer Actions */
         .footer-actions {
             display: flex;
             justify-content: flex-end;
@@ -223,22 +227,47 @@
             text-decoration: underline;
         }
 
-        /* Print Optimization */
+        @media (max-width: 900px) {
+            body {
+                padding: 16px;
+            }
+
+            .app-header,
+            .footer-actions {
+                padding: 18px 20px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+
         @media print {
             body {
                 background-color: white;
                 padding: 0;
             }
+
             .screen-container {
                 border: none;
                 box-shadow: none;
                 max-width: 100%;
             }
+
             .main-content {
                 overflow: visible;
             }
+
             .btn {
-                border: 1px solid #ccc;
+                border: 1px solid #cbd5e1;
                 color: black;
                 background: none;
             }
@@ -248,151 +277,137 @@
 <body>
 
     <div class="screen-container">
-        <!-- App Header -->
         <header class="app-header">
             <div class="header-left">
                 <h1>Create New Job</h1>
-                <p>Fill in the required details to create and publish a job.</p>
-            </div>
-            <div class="header-right">
-                <span class="status-label">Status:</span>
-                <select style="width: 120px;">
-                    <option>Draft</option>
-                    <option>Active</option>
-                    <option>Inactive</option>
-                </select>
+                <p>Fill in the required details to create and publish an MEP vacancy.</p>
             </div>
         </header>
 
-        <!-- Main Content -->
         <main class="main-content">
-            
-            <!-- SECTION 1: Job Basics -->
             <section class="form-section">
-                <div class="section-header">SECTION 1: Job Basics</div>
+                <div class="section-header">Section 1: Job Basics</div>
                 <div class="section-body">
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Job Title</label>
-                            <input type="text" placeholder="e.g. Software Engineer">
+                            <input type="text" value="BIM Coordinator">
                         </div>
                         <div class="form-group">
                             <label>Employment Type</label>
                             <select>
-                                <option>Permanent</option>
-                                <option>Temporary</option>
-                                <option>Internship</option>
+                                <option selected>Permanent</option>
                                 <option>Contract</option>
+                                <option>Internship</option>
+                                <option>Consultant</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Organization</label>
                             <select>
-                                <option>Menasco</option>
+                                <option selected>Menasco</option>
                                 <option>Macs</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Department</label>
                             <select>
-                                <option>IT</option>
+                                <option>QAQC</option>
+                                <option selected>Planning</option>
+                                <option>Procurement</option>
                                 <option>HR</option>
-                                <option>Finance</option>
-                                <option>Marketing</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Number of Openings</label>
-                            <input type="number" placeholder="e.g. 1">
                         </div>
                         <div class="form-group">
                             <label>Work Mode</label>
                             <select>
+                                <option selected>Headquarters</option>
+                                <option>Branch Office</option>
+                                <option>Project/Client Site</option>
+                                <option>Warehouse/Factory</option>
                                 <option>Remote</option>
-                                <option>Hybrid</option>
-                                <option>On-site</option>
+                                <option>Flexible</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Location</label>
+                            <label>Work Location</label>
                             <select>
-                                <option>New York, USA</option>
-                                <option>London, UK</option>
-                                <option>Remote</option>
+                                <option selected>Menasco UAE</option>
+                                <option>Menasco KSA</option>
+                                <option>Macs UAE</option>
+                                <option>Macs KSA</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- SECTION 2: Candidate-Facing Job Content -->
             <section class="form-section">
-                <div class="section-header">SECTION 2: Candidate-Facing Job Content</div>
+                <div class="section-header">Section 2: Candidate-Facing Job Content</div>
                 <div class="section-body">
                     <div class="form-grid">
                         <div class="form-group full-width">
                             <label>Job Summary</label>
-                            <textarea placeholder="Provide a short overview of the role..."></textarea>
+                            <textarea>Coordinate and manage multidisciplinary MEP BIM models for design coordination, clash detection, drawing production, and project submissions across ongoing building projects.</textarea>
                         </div>
-                        
+
                         <div class="form-group full-width">
                             <label>Responsibilities 1</label>
                             <div class="list-input-group">
-                                <input type="text" placeholder="e.g. Develop and maintain web applications">
-                                <button class="btn-add">+</button>
+                                <input type="text" value="Coordinate HVAC, plumbing, firefighting, and electrical BIM models with design and site teams.">
+                                <button type="button" class="btn-add">+</button>
                             </div>
                         </div>
 
                         <div class="form-group full-width">
                             <label>Required Skills 1</label>
                             <div class="list-input-group">
-                                <input type="text" placeholder="e.g. Proficiency in React and Node.js">
-                                <button class="btn-add">+</button>
+                                <input type="text" value="Revit, Navisworks, clash detection, MEP coordination drawings, and model review.">
+                                <button type="button" class="btn-add">+</button>
                             </div>
                         </div>
 
                         <div class="form-group full-width">
                             <label>Preferred Skills 1</label>
                             <div class="list-input-group">
-                                <input type="text" placeholder="e.g. Experience with AWS or Docker">
-                                <button class="btn-add">+</button>
+                                <input type="text" value="UAE project experience, BIM execution plans, consultant coordination, and LOD development.">
+                                <button type="button" class="btn-add">+</button>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>Experience Level</label>
                             <select>
-                                <option>Entry Level</option>
-                                <option>Mid Level</option>
+                                <option>Junior Level</option>
+                                <option selected>Mid Level</option>
                                 <option>Senior Level</option>
-                                <option>Lead / Manager</option>
+                                <option>Lead / Coordinator</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Education</label>
-                            <input type="text" placeholder="e.g. Bachelor's in Computer Science">
+                            <input type="text" value="Bachelor's degree or diploma in Mechanical/Electrical Engineering or a BIM-related discipline">
                         </div>
 
                         <div class="form-group full-width">
-                            <label>Compensation Range (optional)</label>
-                            <input type="text" placeholder="e.g. $80,000 - $120,000 per year">
+                            <label>Salary Range</label>
+                            <input type="text" value="AED 8,000 - AED 12,000 per month">
                         </div>
 
                         <div class="form-group full-width">
                             <label>Benefits / Perks (optional)</label>
-                            <textarea placeholder="e.g. Health insurance, 401k, Flexible hours..."></textarea>
+                            <textarea>Medical insurance, annual leave, air ticket, visa support, and exposure to large-scale MEP coordination projects.</textarea>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- Footer Actions -->
         <footer class="footer-actions">
             <button class="btn btn-cancel">Cancel</button>
             <button class="btn btn-outline">Save Draft</button>
             <button class="btn btn-outline">Preview</button>
-            <button class="btn btn-primary">Save & Publish</button>
+            <button class="btn btn-primary">Save &amp; Publish</button>
         </footer>
     </div>
 
