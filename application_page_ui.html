@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply for Job - Menasco</title>
+    <title>Application Information - Menasco</title>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -241,6 +241,12 @@
             color: var(--text-muted);
         }
 
+        .uploaded-file-name {
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
         /* Footer Actions */
         .footer-actions {
             display: flex;
@@ -320,8 +326,8 @@
     <div class="screen-container">
         <!-- App Header -->
         <header class="app-header">
-            <h1>Apply for Job</h1>
-            <p>Complete the form below to submit your application.</p>
+            <h1>Application Information</h1>
+            <p>Complete the form below to submit your application for the BIM Coordinator position.</p>
         </header>
 
         <!-- Main Content -->
@@ -329,11 +335,11 @@
             
             <!-- Applied Job Info (Read-only) -->
             <section class="job-info-banner">
-                <h2>Applied Job Information</h2>
+                
                 <div class="job-info-grid">
                     <div class="job-info-item">
                         <span class="job-info-label">Job Title</span>
-                        <span class="job-info-value">Software Engineer</span>
+                        <span class="job-info-value">BIM Coordinator</span>
                     </div>
                     <div class="job-info-item">
                         <span class="job-info-label">Organization</span>
@@ -341,15 +347,19 @@
                     </div>
                     <div class="job-info-item">
                         <span class="job-info-label">Department</span>
-                        <span class="job-info-value">IT</span>
+                        <span class="job-info-value">Engineering</span>
                     </div>
                     <div class="job-info-item">
                         <span class="job-info-label">Employment Type</span>
                         <span class="job-info-value">Permanent</span>
                     </div>
                     <div class="job-info-item">
-                        <span class="job-info-label">Location</span>
-                        <span class="job-info-value">Dubai, UAE</span>
+                        <span class="job-info-label">Work Location</span>
+                        <span class="job-info-value">UAE</span>
+                    </div>
+                    <div class="job-info-item">
+                        <span class="job-info-label">Work Mode</span>
+                        <span class="job-info-value">Onsite</span>
                     </div>
                 </div>
             </section>
@@ -361,29 +371,29 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>First Name <span class="required">*</span></label>
-                            <input type="text" placeholder="Enter first name">
+                            <input type="text" value="Mohammed">
                         </div>
                         <div class="form-group">
                             <label>Middle Name</label>
-                            <input type="text" placeholder="Enter middle name">
+                            <input type="text" value="Ali">
                         </div>
                         <div class="form-group">
                             <label>Last Name <span class="required">*</span></label>
-                            <input type="text" placeholder="Enter last name">
+                            <input type="text" value="Khan">
                         </div>
                         <div class="form-group">
                             <label>Preferred Name</label>
-                            <input type="text" placeholder="e.g. Alex">
+                            <input type="text" value="Mo">
                         </div>
                         <div class="form-group">
                             <label>Date of Birth <span class="required">*</span></label>
-                            <input type="date">
+                            <input type="date" value="1994-06-18">
                         </div>
                         <div class="form-group">
                             <label>Gender <span class="required">*</span></label>
                             <select>
                                 <option value="">Select Gender</option>
-                                <option>Male</option>
+                                <option selected>Male</option>
                                 <option>Female</option>
                                 <option>Other</option>
                             </select>
@@ -393,13 +403,13 @@
                             <select>
                                 <option value="">Select Status</option>
                                 <option>Single</option>
-                                <option>Married</option>
+                                <option selected>Married</option>
                                 <option>Divorced</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Number of Children</label>
-                            <input type="number" placeholder="0">
+                            <input type="number" value="2">
                         </div>
                         <div class="form-group">
                             <label>Nationality <span class="required">*</span></label>
@@ -408,7 +418,7 @@
                                 <option>United Arab Emirates</option>
                                 <option>United Kingdom</option>
                                 <option>United States</option>
-                                <option>India</option>
+                                <option selected>India</option>
                                 <option>Other</option>
                             </select>
                         </div>
@@ -423,11 +433,11 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Personal Email <span class="required">*</span></label>
-                            <input type="email" placeholder="example@email.com">
+                            <input type="email" value="mohammed.khan@email.com">
                         </div>
                         <div class="form-group">
                             <label>Personal Phone <span class="required">*</span></label>
-                            <input type="tel" placeholder="+971 50 000 0000">
+                            <input type="tel" value="+971 50 123 4567">
                         </div>
                     </div>
                 </div>
@@ -440,23 +450,23 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Home City</label>
-                            <input type="text" placeholder="e.g. Dubai">
+                            <input type="text" value="Dubai">
                         </div>
                         <div class="form-group">
                             <label>Home Area</label>
-                            <input type="text" placeholder="e.g. Downtown">
+                            <input type="text" value="Al Nahda">
                         </div>
                         <div class="form-group">
                             <label>Home Street</label>
-                            <input type="text" placeholder="Street name">
+                            <input type="text" value="Al Ittihad Road">
                         </div>
                         <div class="form-group">
                             <label>Home Building</label>
-                            <input type="text" placeholder="Building name">
+                            <input type="text" value="Al Noor Tower">
                         </div>
                         <div class="form-group">
                             <label>Flat / Villa Number</label>
-                            <input type="text" placeholder="Number">
+                            <input type="text" value="1204">
                         </div>
                     </div>
                 </div>
@@ -472,14 +482,14 @@
                             <select>
                                 <option value="">Select Level</option>
                                 <option>High School</option>
-                                <option>Bachelor's Degree</option>
+                                <option selected>Bachelor's Degree</option>
                                 <option>Master's Degree</option>
                                 <option>PhD</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Education Discipline</label>
-                            <input type="text" placeholder="e.g. Computer Science">
+                            <input type="text" value="Mechanical Engineering">
                         </div>
                     </div>
                 </div>
@@ -494,30 +504,30 @@
                         <div class="form-grid">
                             <div class="form-group">
                                 <label>Company Name</label>
-                                <input type="text" placeholder="Company name">
+                                <input type="text" value="Al Noor MEP Contracting LLC">
                             </div>
                             <div class="form-group">
                                 <label>Job Title</label>
-                                <input type="text" placeholder="Job title">
+                                <input type="text" value="BIM Modeler - MEP">
                             </div>
                             <div class="form-group">
                                 <label>Start Date</label>
-                                <input type="date">
+                                <input type="date" value="2020-02-01">
                             </div>
                             <div class="form-group">
                                 <label>End Date</label>
-                                <input type="date">
+                                <input type="date" value="2025-01-31">
                             </div>
                             <div class="form-group full-width">
                                 <label>Responsibilities / Summary</label>
-                                <textarea placeholder="Briefly describe your role and achievements..."></textarea>
+                                <textarea>Prepared and coordinated MEP BIM models, supported clash detection reviews, issued model updates, and coordinated with engineering and site teams for project delivery.</textarea>
                             </div>
                         </div>
                     </div>
                     <button class="btn-add">+ Add Another Experience</button>
                     <div class="form-group" style="width: 200px;">
                         <label>Total Years of Experience <span class="required">*</span></label>
-                        <input type="number" placeholder="0">
+                        <input type="number" value="5">
                     </div>
                 </div>
             </section>
@@ -529,11 +539,11 @@
                     <div class="form-grid">
                         <div class="form-group full-width">
                             <label>Languages Spoken</label>
-                            <input type="text" placeholder="e.g. English, Arabic, French">
+                            <input type="text" value="English, Hindi, Urdu">
                         </div>
                         <div class="form-group full-width">
                             <label>Skills / Competencies</label>
-                            <textarea placeholder="List your key professional skills..."></textarea>
+                            <textarea>Revit MEP, Navisworks, AutoCAD, BIM 360, Clash Detection, Shop Drawings, MEP Coordination, Model Review, Quantity Takeoff</textarea>
                         </div>
                     </div>
                 </div>
@@ -545,7 +555,7 @@
                 <div class="section-body">
                     <div class="form-group full-width">
                         <label>Hobbies / Interests</label>
-                        <textarea placeholder="What do you enjoy doing in your free time?"></textarea>
+                        <textarea>Technical drafting research, model coordination learning, football, and reading about MEP project delivery standards.</textarea>
                     </div>
                 </div>
             </section>
@@ -556,7 +566,7 @@
                 <div class="section-body">
                     <div class="form-group" style="width: 250px;">
                         <label>Available Start Date <span class="required">*</span></label>
-                        <input type="date">
+                        <input type="date" value="2026-05-01">
                     </div>
                 </div>
             </section>
@@ -571,18 +581,35 @@
                             <div class="file-upload-group">
                                 <input type="file" style="border:none; padding:0;">
                             </div>
+                            <div class="uploaded-file-name">Selected file: mohammed_khan_photo.jpg</div>
                         </div>
                         <div class="form-group">
                             <label>Passport Upload (PDF)</label>
                             <div class="file-upload-group">
                                 <input type="file" accept=".pdf" style="border:none; padding:0;">
                             </div>
+                            <div class="uploaded-file-name">Selected file: passport_mohammed_khan.pdf</div>
                         </div>
                         <div class="form-group">
                             <label>CV / Resume Upload <span class="required">*</span></label>
                             <div class="file-upload-group">
                                 <input type="file" style="border:none; padding:0;">
                             </div>
+                            <div class="uploaded-file-name">Selected file: mohammed_khan_bim_cv.pdf</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Graduation Certificate Upload</label>
+                            <div class="file-upload-group">
+                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="border:none; padding:0;">
+                            </div>
+                            <div class="uploaded-file-name">Selected file: graduation_certificate_btech_mechanical.pdf</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Current Visa Upload</label>
+                            <div class="file-upload-group">
+                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="border:none; padding:0;">
+                            </div>
+                            <div class="uploaded-file-name">Selected file: current_uae_visa_copy.pdf</div>
                         </div>
                     </div>
                 </div>
