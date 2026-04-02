@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Jobs - Admin Dashboard</title>
+    <title>Manage Jobs - HR Dashboard</title>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -15,12 +15,12 @@
             --border-color: #e2e8f0;
             --success-bg: #dcfce7;
             --success-text: #166534;
-            --warning-bg: #fef9c3;
-            --warning-text: #854d0e;
             --danger-bg: #fee2e2;
             --danger-text: #991b1b;
             --draft-bg: #f1f5f9;
             --draft-text: #475569;
+            --closed-bg: #fef2f2;
+            --closed-text: #991b1b;
         }
 
         * {
@@ -31,7 +31,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #cbd5e1; /* Desktop background color */
+            background-color: #cbd5e1;
             color: var(--text-main);
             line-height: 1.5;
             padding: 40px;
@@ -40,21 +40,19 @@
             min-height: 100vh;
         }
 
-        /* Computer Screen Container */
         .screen-container {
             width: 100%;
             max-width: 1200px;
             background-color: var(--bg-color);
             border-radius: 12px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 12px solid #334155; /* Monitor frame */
+            border: 12px solid #334155;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* Browser/App Header */
         .app-header {
             background-color: #ffffff;
             border-bottom: 1px solid var(--border-color);
@@ -73,13 +71,11 @@
             color: var(--text-muted);
         }
 
-        /* Main Content Area */
         .main-content {
             padding: 32px;
             flex-grow: 1;
         }
 
-        /* Action Bar */
         .action-bar {
             background: var(--card-bg);
             padding: 24px;
@@ -156,7 +152,6 @@
             flex-grow: 1;
         }
 
-        /* Table Styles */
         .table-container {
             background: var(--card-bg);
             border-radius: 8px;
@@ -186,7 +181,7 @@
             padding: 16px;
             font-size: 14px;
             border-bottom: 1px solid var(--border-color);
-            vertical-align: middle;
+            vertical-align: top;
         }
 
         tr:last-child td {
@@ -197,7 +192,6 @@
             background-color: #f8fafc;
         }
 
-        /* Status Badges */
         .badge {
             padding: 4px 10px;
             border-radius: 9999px;
@@ -208,66 +202,69 @@
 
         .badge-draft { background: var(--draft-bg); color: var(--draft-text); }
         .badge-active { background: var(--success-bg); color: var(--success-text); }
-        .badge-inactive { background: var(--danger-bg); color: var(--danger-text); }
+        .badge-closed { background: var(--closed-bg); color: var(--closed-text); }
 
-        /* Action Links & Dropdown */
-        .action-links {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            position: relative;
-        }
-
-        .action-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 13px;
-        }
-
-        .action-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Row Actions Dropdown */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: block; /* Visible for wireframe clarity */
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background-color: #ffffff;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 10;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            margin-top: 4px;
-        }
-
-        .dropdown-content a {
-            color: var(--text-main);
-            padding: 10px 16px;
-            text-decoration: none;
+        .job-title {
+            font-weight: 600;
             display: block;
+            margin-bottom: 2px;
+        }
+
+        .job-subtext {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .actions-cell {
+            min-width: 210px;
+        }
+
+        .action-dropdown {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .action-dropdown.closed {
+            overflow: visible;
+        }
+
+        .action-dropdown.closed .action-dropdown-label {
+            border-bottom: none;
+            background: #ffffff;
+        }
+
+        .action-dropdown.closed ul {
+            display: none;
+        }
+
+        .action-dropdown-label {
+            padding: 10px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-color);
+            background: #eff6ff;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .action-dropdown ul {
+            list-style: none;
+        }
+
+        .action-dropdown li {
+            padding: 9px 14px;
             font-size: 13px;
             border-bottom: 1px solid #f1f5f9;
+            color: var(--text-main);
         }
 
-        .dropdown-content a:last-child {
+        .action-dropdown li:last-child {
             border-bottom: none;
             color: var(--danger-text);
+            font-weight: 600;
         }
 
-        .dropdown-content a:hover {
-            background-color: #f8fafc;
-        }
-
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: space-between;
@@ -282,28 +279,53 @@
             color: var(--text-muted);
         }
 
-        /* Print Optimization */
+        @media (max-width: 1024px) {
+            body {
+                padding: 18px;
+            }
+
+            .main-content,
+            .app-header,
+            .pagination {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            th, td {
+                padding: 12px;
+            }
+        }
+
         @media print {
             body {
                 background-color: white;
                 padding: 0;
             }
+
             .screen-container {
                 border: none;
                 box-shadow: none;
                 max-width: 100%;
+                border-radius: 0;
             }
-            .btn-primary {
-                border: 1px solid #ccc;
-                color: black;
-                background: none;
+
+            .btn-primary,
+            .btn-outline,
+            .search-input,
+            .select-filter {
+                border: 1px solid #cbd5e1;
+                color: #111827;
+                background: white;
             }
-            .dropdown-content {
-                position: static;
+
+            .table-container,
+            .action-bar {
                 box-shadow: none;
-                border: 1px solid #eee;
-                display: block;
-                margin-top: 10px;
+            }
+
+            .action-dropdown-label {
+                background: #f8fafc;
+                color: #111827;
             }
         }
     </style>
@@ -311,34 +333,58 @@
 <body>
 
     <div class="screen-container">
-        <!-- App Header -->
         <header class="app-header">
             <h1>Manage Jobs</h1>
-            <p>View, search, filter, and manage all jobs across organizations.</p>
+            <p>HR can create, review, publish, close, and manage all job postings from one place.</p>
         </header>
 
-        <!-- Main Content -->
         <main class="main-content">
-            
-            <!-- Top Action Bar -->
             <section class="action-bar">
                 <div class="search-row">
                     <input type="text" class="search-input" placeholder="Search by job title / keyword">
                     <button class="btn btn-primary">Search</button>
                 </div>
                 <div class="filter-row">
-                    <select class="select-filter"><option>Organization</option></select>
-                    <select class="select-filter"><option>Department</option></select>
-                    <select class="select-filter"><option>Status</option></select>
-                    <select class="select-filter"><option>Employment Type</option></select>
-                    <select class="select-filter"><option>Work Mode</option></select>
+                    <select class="select-filter">
+                        <option>Organization</option>
+                        <option>Menasco</option>
+                        <option>Macs</option>
+                    </select>
+                    <select class="select-filter">
+                        <option>Department</option>
+                        <option>QAQC</option>
+                        <option>Planning</option>
+                        <option>Procurement</option>
+                        <option>HR</option>
+                    </select>
+                    <select class="select-filter">
+                        <option>Status</option>
+                        <option>Draft</option>
+                        <option>Active</option>
+                        <option>Closed</option>
+                    </select>
+                    <select class="select-filter">
+                        <option>Employment Type</option>
+                        <option>Permanent</option>
+                        <option>Contract</option>
+                        <option>Internship</option>
+                        <option>Consultant</option>
+                    </select>
+                    <select class="select-filter">
+                        <option>Work Mode</option>
+                        <option>Headquarters</option>
+                        <option>Branch Office</option>
+                        <option>Project/Client Site</option>
+                        <option>Warehouse/Factory</option>
+                        <option>Remote</option>
+                        <option>Flexible</option>
+                    </select>
                     <button class="btn btn-outline" style="padding: 8px 12px; font-size: 13px;">Clear Filters</button>
                     <div class="spacer"></div>
                     <button class="btn btn-primary">+ Create New Job</button>
                 </div>
             </section>
 
-            <!-- Job List Table -->
             <div class="table-container">
                 <table>
                     <thead>
@@ -348,62 +394,106 @@
                             <th>Department</th>
                             <th>Type</th>
                             <th>Status</th>
-                            <th>Openings</th>
+                            <th>Work Mode</th>
                             <th>Updated On</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="font-weight: 600;">Software Engineer</td>
+                            <td>
+                                <span class="job-title">QAQC Engineer</span>
+                                <span class="job-subtext">Active role for inspections, documentation review, and quality compliance tracking</span>
+                            </td>
                             <td>Menasco</td>
-                            <td>IT</td>
+                            <td>QAQC</td>
                             <td>Permanent</td>
-                            <td><span class="badge badge-draft">Draft</span></td>
-                            <td>2</td>
-                            <td>30 Mar</td>
-                            <td class="action-links">
-                                <a href="#" class="action-link">View</a>
-                                <a href="#" class="action-link">Edit</a>
-                                <div class="dropdown">
-                                    <a href="#" class="action-link" style="font-weight: 700;">More ▼</a>
-                                    <div class="dropdown-content">
-                                        <a href="#">Preview</a>
-                                        <a href="#">Publish</a>
-                                        <a href="#">Deactivate</a>
-                                        <a href="#">Duplicate</a>
-                                        <a href="#">Close Job</a>
-                                        <a href="#">Delete</a>
-                                    </div>
+                            <td><span class="badge badge-active">Active</span></td>
+                            <td>Headquarters</td>
+                            <td>31 Mar</td>
+                            <td class="actions-cell">
+                                <div class="action-dropdown">
+                                    <div class="action-dropdown-label">Actions ▼</div>
+                                    <ul>
+                                        <li>1. View or Edit</li>
+                                        <li>2. Publish</li>
+                                        <li>3. Close</li>
+                                        <li>4. Delete</li>
+                                        <li>5. Duplicate</li>
+                                    </ul>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;">HR Executive</td>
+                            <td>
+                                <span class="job-title">Planning Engineer</span>
+                                <span class="job-subtext">Published vacancy for schedule preparation, progress tracking, and project coordination</span>
+                            </td>
                             <td>Macs</td>
-                            <td>HR</td>
-                            <td>Permanent</td>
+                            <td>Planning</td>
+                            <td>Contract</td>
                             <td><span class="badge badge-active">Active</span></td>
-                            <td>1</td>
-                            <td>28 Mar</td>
-                            <td class="action-links">
-                                <a href="#" class="action-link">View</a>
-                                <a href="#" class="action-link">Edit</a>
-                                <a href="#" class="action-link">More ▼</a>
+                            <td>Project/Client Site</td>
+                            <td>29 Mar</td>
+                            <td class="actions-cell">
+                                <div class="action-dropdown closed">
+                                    <div class="action-dropdown-label">Actions ▼</div>
+                                    <ul>
+                                        <li>1. View or Edit</li>
+                                        <li>2. Publish</li>
+                                        <li>3. Close</li>
+                                        <li>4. Delete</li>
+                                        <li>5. Duplicate</li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                         <tr>
-                            <td style="font-weight: 600;">Finance Intern</td>
+                            <td>
+                                <span class="job-title">Procurement Intern</span>
+                                <span class="job-subtext">Draft opening prepared for vendor follow-up, quotation tracking, and purchase support</span>
+                            </td>
                             <td>Menasco</td>
-                            <td>Finance</td>
+                            <td>Procurement</td>
                             <td>Internship</td>
-                            <td><span class="badge badge-inactive">Inactive</span></td>
-                            <td>3</td>
-                            <td>25 Mar</td>
-                            <td class="action-links">
-                                <a href="#" class="action-link">View</a>
-                                <a href="#" class="action-link">Edit</a>
-                                <a href="#" class="action-link">More ▼</a>
+                            <td><span class="badge badge-draft">Draft</span></td>
+                            <td>Branch Office</td>
+                            <td>27 Mar</td>
+                            <td class="actions-cell">
+                                <div class="action-dropdown closed">
+                                    <div class="action-dropdown-label">Actions ▼</div>
+                                    <ul>
+                                        <li>1. View or Edit</li>
+                                        <li>2. Publish</li>
+                                        <li>3. Close</li>
+                                        <li>4. Delete</li>
+                                        <li>5. Duplicate</li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="job-title">HR Consultant</span>
+                                <span class="job-subtext">Closed role previously used for policy review, hiring workflow support, and team advisory</span>
+                            </td>
+                            <td>Macs</td>
+                            <td>HR</td>
+                            <td>Consultant</td>
+                            <td><span class="badge badge-closed">Closed</span></td>
+                            <td>Flexible</td>
+                            <td>24 Mar</td>
+                            <td class="actions-cell">
+                                <div class="action-dropdown closed">
+                                    <div class="action-dropdown-label">Actions ▼</div>
+                                    <ul>
+                                        <li>1. View or Edit</li>
+                                        <li>2. Publish</li>
+                                        <li>3. Close</li>
+                                        <li>4. Delete</li>
+                                        <li>5. Duplicate</li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -411,10 +501,9 @@
             </div>
         </main>
 
-        <!-- Pagination -->
         <footer class="pagination">
             <button class="btn btn-outline">Previous</button>
-            <span class="page-info">Page 1 of 4</span>
+            <span class="page-info">Page 1 of 1</span>
             <button class="btn btn-outline">Next</button>
         </footer>
     </div>
