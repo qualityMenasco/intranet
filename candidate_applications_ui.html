@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candidate Applications - Menasco</title>
+    <title>Application Information - Menasco</title>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -13,10 +13,9 @@
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --journey-bg: #f1f5f9;
+            --input-bg: #ffffff;
+            --section-bg: #f1f5f9;
+            --required-color: #ef4444;
         }
 
         * {
@@ -39,7 +38,7 @@
         /* Computer Screen Container */
         .screen-container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1100px;
             background-color: var(--bg-color);
             border-radius: 12px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -53,18 +52,18 @@
         .app-header {
             background-color: #ffffff;
             border-bottom: 1px solid var(--border-color);
-            padding: 20px 32px;
+            padding: 24px 32px;
         }
 
         .app-header h1 {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 28px;
+            font-weight: 800;
             color: var(--text-main);
             margin-bottom: 4px;
         }
 
         .app-header p {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-muted);
         }
 
@@ -75,34 +74,193 @@
             overflow-y: auto;
         }
 
-        /* Action Bar */
-        .action-bar {
+        /* Read-only Job Info Section */
+        .job-info-banner {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+
+        .job-info-banner h2 {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #1e40af;
+            margin-bottom: 12px;
+            letter-spacing: 0.05em;
+        }
+
+        .job-info-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        .job-info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .job-info-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #60a5fa;
+            text-transform: uppercase;
+        }
+
+        .job-info-value {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        /* Form Sections */
+        .form-section {
             background: var(--card-bg);
-            padding: 24px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
             margin-bottom: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow: hidden;
         }
 
-        .search-row {
+        .section-header {
+            background-color: var(--section-bg);
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .section-body {
+            padding: 24px;
+        }
+
+        /* Grid Layout for Form Fields */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
             display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        .search-input {
-            flex-grow: 1;
-            padding: 10px 16px;
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        label .required {
+            color: var(--required-color);
+            margin-left: 2px;
+        }
+
+        input, select, textarea {
+            padding: 10px 14px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             font-size: 14px;
+            width: 100%;
+            background-color: var(--input-bg);
+            color: var(--text-main);
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Experience Entry Styling */
+        .experience-entry {
+            padding: 16px;
+            background-color: #f8fafc;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .experience-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .btn-add {
+            padding: 8px 16px;
+            background-color: white;
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .btn-add:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* File Upload Styling */
+        .file-upload-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border: 1px dashed var(--border-color);
+            border-radius: 6px;
+            background-color: #fcfcfc;
+        }
+
+        .file-upload-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .uploaded-file-name {
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Footer Actions */
+        .footer-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 24px 32px;
+            background: white;
+            border-top: 1px solid var(--border-color);
         }
 
         .btn {
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.2s;
@@ -110,7 +268,6 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
         }
 
         .btn-primary {
@@ -132,294 +289,14 @@
             background-color: #f1f5f9;
         }
 
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
+        .btn-cancel {
+            background-color: transparent;
+            color: var(--text-muted);
         }
 
-        .select-filter {
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background-color: white;
-            font-size: 13px;
-            min-width: 160px;
+        .btn-cancel:hover {
             color: var(--text-main);
-        }
-
-        .clear-filters {
-            font-size: 13px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 8px;
-        }
-
-        .clear-filters:hover {
             text-decoration: underline;
-        }
-
-        /* Summary Info */
-        .summary-info {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            padding-left: 4px;
-        }
-
-        /* Table Styles */
-        .table-container {
-            background: var(--card-bg);
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 32px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f8fafc;
-            padding: 16px;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        td {
-            padding: 16px;
-            font-size: 14px;
-            border-bottom: 1px solid var(--border-color);
-            vertical-align: middle;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover {
-            background-color: #f8fafc;
-        }
-
-        /* Status Badges */
-        .badge {
-            padding: 4px 10px;
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .badge-new { background: #dcfce7; color: #166534; }
-        .badge-shortlisted { background: #eff6ff; color: #1e40af; }
-        .badge-interview { background: #fef9c3; color: #854d0e; }
-        .badge-rejected { background: #fee2e2; color: #991b1b; }
-
-        /* Journey Link */
-        .journey-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 13px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .journey-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Hiring Journey Tracker (Visual Timeline) */
-        .journey-tracker-container {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 32px;
-            margin-top: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .journey-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
-        }
-
-        .journey-header h3 {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            padding-left: 40px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 15px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #e2e8f0;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 24px;
-        }
-
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: -32px;
-            top: 4px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: white;
-            border: 3px solid #cbd5e1;
-            z-index: 1;
-        }
-
-        .timeline-item.completed .timeline-dot {
-            background: var(--success-color);
-            border-color: var(--success-color);
-        }
-
-        .timeline-item.active .timeline-dot {
-            background: white;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
-
-        .timeline-content {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .timeline-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .timeline-item.completed .timeline-title {
-            color: var(--success-color);
-        }
-
-        .timeline-item.active .timeline-title {
-            color: var(--primary-color);
-        }
-
-        .timeline-date {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Horizontal Journey (Delivery App Style) */
-        .horizontal-journey {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin-bottom: 40px;
-            padding: 0 20px;
-        }
-
-        .horizontal-journey::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 40px;
-            right: 40px;
-            height: 2px;
-            background: #e2e8f0;
-            z-index: 0;
-        }
-
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-            width: 80px;
-        }
-
-        .step-dot {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: white;
-            border: 2px solid #cbd5e1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #94a3b8;
-        }
-
-        .step.completed .step-dot {
-            background: var(--success-color);
-            border-color: var(--success-color);
-            color: white;
-        }
-
-        .step.active .step-dot {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
-
-        .step-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-align: center;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            line-height: 1.2;
-        }
-
-        .step.completed .step-label, .step.active .step-label {
-            color: var(--text-main);
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 32px;
-            background: white;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .page-info {
-            font-size: 14px;
-            color: var(--text-muted);
         }
 
         /* Print Optimization */
@@ -433,8 +310,13 @@
                 box-shadow: none;
                 max-width: 100%;
             }
-            .journey-tracker-container {
-                break-inside: avoid;
+            .main-content {
+                overflow: visible;
+            }
+            .btn {
+                border: 1px solid #ccc;
+                color: black;
+                background: none;
             }
         }
     </style>
@@ -444,244 +326,301 @@
     <div class="screen-container">
         <!-- App Header -->
         <header class="app-header">
-            <h1>Candidate Applications</h1>
-            <p>Review, track, and manage all candidate applications.</p>
+            <h1>Application Information</h1>
+            <p>Complete the form below to submit your application for the BIM Coordinator position.</p>
         </header>
 
         <!-- Main Content -->
         <main class="main-content">
             
-            <!-- Top Action Bar -->
-            <section class="action-bar">
-                <div class="search-row">
-                    <input type="text" class="search-input" placeholder="Search by candidate name / email / phone">
-                    <button class="btn btn-primary">Search</button>
-                </div>
-                <div class="filter-row">
-                    <select class="select-filter"><option>Job Title</option></select>
-                    <select class="select-filter"><option>Organization: Menasco</option></select>
-                    <select class="select-filter"><option>Department</option></select>
-                    <select class="select-filter"><option>Status</option></select>
-                    <select class="select-filter"><option>Applied Date</option></select>
-                    <select class="select-filter"><option>Experience Level</option></select>
-                    <a href="#" class="clear-filters">Clear Filters</a>
+            <!-- Applied Job Info (Read-only) -->
+            <section class="job-info-banner">
+                
+                <div class="job-info-grid">
+                    <div class="job-info-item">
+                        <span class="job-info-label">Job Title</span>
+                        <span class="job-info-value">BIM Coordinator</span>
+                    </div>
+                    <div class="job-info-item">
+                        <span class="job-info-label">Organization</span>
+                        <span class="job-info-value">Menasco</span>
+                    </div>
+                    <div class="job-info-item">
+                        <span class="job-info-label">Department</span>
+                        <span class="job-info-value">Engineering</span>
+                    </div>
+                    <div class="job-info-item">
+                        <span class="job-info-label">Employment Type</span>
+                        <span class="job-info-value">Permanent</span>
+                    </div>
+                    <div class="job-info-item">
+                        <span class="job-info-label">Work Location</span>
+                        <span class="job-info-value">UAE</span>
+                    </div>
+                    <div class="job-info-item">
+                        <span class="job-info-label">Work Mode</span>
+                        <span class="job-info-value">Onsite</span>
+                    </div>
                 </div>
             </section>
 
-            <!-- Summary Info -->
-            <div class="summary-info">
-                Showing 128 applications
-            </div>
-
-            <!-- Applications Table -->
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Candidate Name</th>
-                            <th>Applied Job</th>
-                            <th>Organization</th>
-                            <th>Applied Date</th>
-                            <th>Status</th>
-                            <th>Hiring Journey</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="font-weight: 600;">Ahmed Khan</td>
-                            <td>Software Engineer</td>
-                            <td>Menasco</td>
-                            <td>30 Mar 2026</td>
-                            <td><span class="badge badge-new">New</span></td>
-                            <td><a href="#journey" class="journey-link">View Journey</a></td>
-                            <td><a href="#" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">View</a></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 600;">Sara Ali</td>
-                            <td>HR Executive</td>
-                            <td>Menasco</td>
-                            <td>29 Mar 2026</td>
-                            <td><span class="badge badge-shortlisted">Shortlisted</span></td>
-                            <td><a href="#journey" class="journey-link">View Journey</a></td>
-                            <td><a href="#" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">View</a></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 600;">John Mathew</td>
-                            <td>Finance Intern</td>
-                            <td>Menasco</td>
-                            <td>28 Mar 2026</td>
-                            <td><span class="badge badge-interview">Interview</span></td>
-                            <td><a href="#journey" class="journey-link">View Journey</a></td>
-                            <td><a href="#" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">View</a></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight: 600;">Maria Joseph</td>
-                            <td>Accounts Officer</td>
-                            <td>Menasco</td>
-                            <td>27 Mar 2026</td>
-                            <td><span class="badge badge-rejected">Rejected</span></td>
-                            <td><a href="#journey" class="journey-link">View Journey</a></td>
-                            <td><a href="#" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;">View</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Hiring Journey Tracker (Visual Timeline) -->
-            <div id="journey" class="journey-tracker-container">
-                <div class="journey-header">
-                    <h3>Hiring Journey: Ahmed Khan</h3>
-                    <span class="badge badge-shortlisted">Current Stage: HR Shortlisted</span>
-                </div>
-
-                <!-- Horizontal Track (Delivery App Style) -->
-                <div class="horizontal-journey">
-                    <div class="step completed">
-                        <div class="step-dot">✓</div>
-                        <div class="step-label">Application Made</div>
-                    </div>
-                    <div class="step active">
-                        <div class="step-dot">2</div>
-                        <div class="step-label">HR Shortlisted</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">3</div>
-                        <div class="step-label">Interview Invite</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">4</div>
-                        <div class="step-label">Assessment</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">5</div>
-                        <div class="step-label">HR Approval</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">6</div>
-                        <div class="step-label">Notification</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">7</div>
-                        <div class="step-label">Visa Request</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">8</div>
-                        <div class="step-label">Docs Received</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">9</div>
-                        <div class="step-label">MOFA Request</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">10</div>
-                        <div class="step-label">Visa Process</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">11</div>
-                        <div class="step-label">ID Generated</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-dot">12</div>
-                        <div class="step-label">Onboarded</div>
-                    </div>
-                </div>
-
-                <!-- Detailed Vertical Timeline -->
-                <div class="timeline">
-                    <div class="timeline-item completed">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Application Made</span>
-                            <span class="timeline-date">30 Mar 2026, 10:30 AM</span>
+            <!-- SECTION 1: Personal Information -->
+            <section class="form-section">
+                <div class="section-header">SECTION 1: Personal Information</div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>First Name <span class="required">*</span></label>
+                            <input type="text" value="Mohammed">
                         </div>
-                    </div>
-                    <div class="timeline-item active">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">HR Shortlisted</span>
-                            <span class="timeline-date">30 Mar 2026, 02:15 PM</span>
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <input type="text" value="Ali">
                         </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Manager Invited for Interview</span>
-                            <span class="timeline-date">Pending</span>
+                        <div class="form-group">
+                            <label>Last Name <span class="required">*</span></label>
+                            <input type="text" value="Khan">
                         </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Interview Completion & Assessment Submission</span>
-                            <span class="timeline-date">Pending</span>
+                        <div class="form-group">
+                            <label>Preferred Name</label>
+                            <input type="text" value="Mo">
                         </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">HR Approved Assessment</span>
-                            <span class="timeline-date">Pending</span>
+                        <div class="form-group">
+                            <label>Date of Birth <span class="required">*</span></label>
+                            <input type="date" value="1994-06-18">
                         </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Candidate Notified</span>
-                            <span class="timeline-date">Pending</span>
+                        <div class="form-group">
+                            <label>Gender <span class="required">*</span></label>
+                            <select>
+                                <option value="">Select Gender</option>
+                                <option selected>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Visa Document Requested from Candidate</span>
-                            <span class="timeline-date">Pending</span>
+                        <div class="form-group">
+                            <label>Marital Status</label>
+                            <select>
+                                <option value="">Select Status</option>
+                                <option>Single</option>
+                                <option selected>Married</option>
+                                <option>Divorced</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Documents Received</span>
-                            <span class="timeline-date">Pending</span>
+                        <div class="form-group">
+                            <label>Number of Children</label>
+                            <input type="number" value="2">
                         </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Visa Request Sent to Ministry of Foreign Affairs</span>
-                            <span class="timeline-date">Pending</span>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Visa in HR Process</span>
-                            <span class="timeline-date">Pending</span>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Employee ID Generated</span>
-                            <span class="timeline-date">Pending</span>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <span class="timeline-title">Applicant Onboarded</span>
-                            <span class="timeline-date">Pending</span>
+                        <div class="form-group">
+                            <label>Nationality <span class="required">*</span></label>
+                            <select>
+                                <option value="">Select Nationality</option>
+                                <option>United Arab Emirates</option>
+                                <option>United Kingdom</option>
+                                <option>United States</option>
+                                <option selected>India</option>
+                                <option>Other</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- SECTION 2: Contact Information -->
+            <section class="form-section">
+                <div class="section-header">SECTION 2: Contact Information</div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Personal Email <span class="required">*</span></label>
+                            <input type="email" value="mohammed.khan@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Personal Phone <span class="required">*</span></label>
+                            <input type="tel" value="+971 50 123 4567">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Address Information -->
+            <section class="form-section">
+                <div class="section-header">SECTION 3: Address Information</div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Home City</label>
+                            <input type="text" value="Dubai">
+                        </div>
+                        <div class="form-group">
+                            <label>Home Area</label>
+                            <input type="text" value="Al Nahda">
+                        </div>
+                        <div class="form-group">
+                            <label>Home Street</label>
+                            <input type="text" value="Al Ittihad Road">
+                        </div>
+                        <div class="form-group">
+                            <label>Home Building</label>
+                            <input type="text" value="Al Noor Tower">
+                        </div>
+                        <div class="form-group">
+                            <label>Flat / Villa Number</label>
+                            <input type="text" value="1204">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Education -->
+            <section class="form-section">
+                <div class="section-header">SECTION 4: Education</div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Education Level</label>
+                            <select>
+                                <option value="">Select Level</option>
+                                <option>High School</option>
+                                <option selected>Bachelor's Degree</option>
+                                <option>Master's Degree</option>
+                                <option>PhD</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Education Discipline</label>
+                            <input type="text" value="Mechanical Engineering">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: Work Experience -->
+            <section class="form-section">
+                <div class="section-header">SECTION 5: Work Experience</div>
+                <div class="section-body">
+                    <div class="experience-entry">
+                        <span class="experience-title">Experience Entry 1</span>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input type="text" value="Al Noor MEP Contracting LLC">
+                            </div>
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input type="text" value="BIM Modeler - MEP">
+                            </div>
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <input type="date" value="2020-02-01">
+                            </div>
+                            <div class="form-group">
+                                <label>End Date</label>
+                                <input type="date" value="2025-01-31">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Responsibilities / Summary</label>
+                                <textarea>Prepared and coordinated MEP BIM models, supported clash detection reviews, issued model updates, and coordinated with engineering and site teams for project delivery.</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-add">+ Add Another Experience</button>
+                    <div class="form-group" style="width: 200px;">
+                        <label>Total Years of Experience <span class="required">*</span></label>
+                        <input type="number" value="5">
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: Skills & Languages -->
+            <section class="form-section">
+                <div class="section-header">SECTION 6: Skills & Languages</div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Languages Spoken</label>
+                            <input type="text" value="English, Hindi, Urdu">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Skills / Competencies</label>
+                            <textarea>Revit MEP, Navisworks, AutoCAD, BIM 360, Clash Detection, Shop Drawings, MEP Coordination, Model Review, Quantity Takeoff</textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 7: Interests / Social Activities -->
+            <section class="form-section">
+                <div class="section-header">SECTION 7: Interests / Social Activities</div>
+                <div class="section-body">
+                    <div class="form-group full-width">
+                        <label>Hobbies / Interests</label>
+                        <textarea>Technical drafting research, model coordination learning, football, and reading about MEP project delivery standards.</textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 8: Availability -->
+            <section class="form-section">
+                <div class="section-header">SECTION 8: Availability</div>
+                <div class="section-body">
+                    <div class="form-group" style="width: 250px;">
+                        <label>Available Start Date <span class="required">*</span></label>
+                        <input type="date" value="2026-05-01">
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 9: Documents Upload -->
+            <section class="form-section">
+                <div class="section-header">SECTION 9: Documents Upload</div>
+                <div class="section-body">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Photo Upload</label>
+                            <div class="file-upload-group">
+                                <input type="file" style="border:none; padding:0;">
+                            </div>
+                            <div class="uploaded-file-name">Selected file: mohammed_khan_photo.jpg</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Passport Upload (PDF)</label>
+                            <div class="file-upload-group">
+                                <input type="file" accept=".pdf" style="border:none; padding:0;">
+                            </div>
+                            <div class="uploaded-file-name">Selected file: passport_mohammed_khan.pdf</div>
+                        </div>
+                        <div class="form-group">
+                            <label>CV / Resume Upload <span class="required">*</span></label>
+                            <div class="file-upload-group">
+                                <input type="file" style="border:none; padding:0;">
+                            </div>
+                            <div class="uploaded-file-name">Selected file: mohammed_khan_bim_cv.pdf</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Graduation Certificate Upload</label>
+                            <div class="file-upload-group">
+                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="border:none; padding:0;">
+                            </div>
+                            <div class="uploaded-file-name">Selected file: graduation_certificate_btech_mechanical.pdf</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Current Visa Upload</label>
+                            <div class="file-upload-group">
+                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="border:none; padding:0;">
+                            </div>
+                            <div class="uploaded-file-name">Selected file: current_uae_visa_copy.pdf</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
-        <!-- Pagination -->
-        <footer class="pagination">
-            <button class="btn btn-outline">Previous</button>
-            <span class="page-info">Page 1 of 8</span>
-            <button class="btn btn-outline">Next</button>
+        <!-- Footer Actions -->
+        <footer class="footer-actions">
+            <button class="btn btn-cancel">Cancel</button>
+            <button class="btn btn-outline">Save Draft</button>
+            <button class="btn btn-primary">Submit Application</button>
         </footer>
     </div>
 
