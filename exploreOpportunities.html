@@ -297,7 +297,7 @@
         <!-- App Header -->
         <header class="app-header">
             <h1>Explore Opportunities</h1>
-            <p>Browse open positions and select a job to view details and apply.</p>
+            <p>Browse open MEP and support positions and select a job to view details and apply.</p>
         </header>
 
         <!-- Main Content -->
@@ -306,23 +306,60 @@
             <!-- Search & Filters -->
             <section class="search-filters">
                 <div class="search-row">
-                    <input type="text" class="search-input" placeholder="Search by job title, keyword, or skill">
+                    <input type="text" class="search-input" placeholder="Search by job title, department, or skill">
                     <button class="btn btn-primary">Search</button>
                 </div>
-                <div class="filter-row">
-                    <select class="select-filter"><option>Organization</option></select>
-                    <select class="select-filter"><option>Department</option></select>
-                    <select class="select-filter"><option>Employment Type</option></select>
-                    <select class="select-filter"><option>Work Mode</option></select>
-                    <select class="select-filter"><option>Location</option></select>
-                    <select class="select-filter"><option>Experience Level</option></select>
+                
+<div class="filter-row">
+                    <select class="select-filter">
+                        <option selected>Organization</option>
+                        <option>Menasco</option>
+                        <option>Macs</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Department</option>
+                        <option>QAQC</option>
+                        <option>Planning</option>
+                        <option>Procurement</option>
+                        <option>HR</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Employment Type</option>
+                        <option>Permanent</option>
+                        <option>Contract</option>
+                        <option>Internship</option>
+                        <option>Consultant</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Work Mode</option>
+                        <option>Headquarters</option>
+                        <option>Branch Office</option>
+                        <option>Project/Client Site</option>
+                        <option>Warehouse/Factory</option>
+                        <option>Remote</option>
+                        <option>Flexible</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Work Location</option>
+                        <option>UAE</option>
+                        <option>KSA</option>
+                        <option>UAE</option>
+                        <option>KSA</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Experience Level</option>
+                        <option>Fresher</option>
+                        <option>1-3 years</option>
+                        <option>3-5 years</option>
+                        <option>5+ years</option>
+                    </select>
                     <a href="#" class="clear-filters">Clear Filters</a>
                 </div>
             </section>
 
             <!-- Results Info -->
             <div class="results-info">
-                Showing 24 open jobs
+                Showing 4 open jobs
             </div>
 
             <!-- Job Listings -->
@@ -330,18 +367,18 @@
                 <!-- Job 1 -->
                 <div class="job-card">
                     <div class="job-card-header">
-                        <h2 class="job-title">Software Engineer</h2>
+                        <h2 class="job-title">BIM Coordinator</h2>
                         <span class="job-type-badge">Permanent</span>
                     </div>
                     <div class="job-meta">
                         <span class="meta-item" style="font-weight: 600; color: var(--text-main);">Menasco</span>
-                        <span class="meta-item">IT</span>
-                        <span class="meta-item">Hybrid</span>
-                        <span class="meta-item">Dubai</span>
-                        <span class="meta-item">2-4 years</span>
+                        <span class="meta-item">Planning</span>
+                        <span class="meta-item">Permanent</span>
+                        <span class="meta-item">UAE</span>
+                        <span class="meta-item">3-5 years</span>
                     </div>
                     <p class="job-description">
-                        We are looking for a Software Engineer to build and maintain internal applications.
+                        Coordinate BIM models for MEP services, support clash resolution, and work with design and site teams to maintain project standards.
                     </p>
                     <a href="#" class="view-details-btn">View Details</a>
                 </div>
@@ -349,18 +386,18 @@
                 <!-- Job 2 -->
                 <div class="job-card">
                     <div class="job-card-header">
-                        <h2 class="job-title">HR Executive</h2>
-                        <span class="job-type-badge">Permanent</span>
+                        <h2 class="job-title">QAQC Engineer</h2>
+                        <span class="job-type-badge">Contract</span>
                     </div>
                     <div class="job-meta">
-                        <span class="meta-item" style="font-weight: 600; color: var(--text-main);">Menasco</span>
-                        <span class="meta-item">HR</span>
-                        <span class="meta-item">On-site</span>
-                        <span class="meta-item">Abu Dhabi</span>
-                        <span class="meta-item">1-3 years</span>
+                        <span class="meta-item" style="font-weight: 600; color: var(--text-main);">Macs</span>
+                        <span class="meta-item">QAQC</span>
+                        <span class="meta-item">Contract</span>
+                        <span class="meta-item">UAE</span>
+                        <span class="meta-item">3-5 years</span>
                     </div>
                     <p class="job-description">
-                        We are seeking an HR Executive to support recruitment and employee operations.
+                        Monitor MEP quality standards, review inspection records, and support site teams in maintaining compliance with project specifications.
                     </p>
                     <a href="#" class="view-details-btn">View Details</a>
                 </div>
@@ -368,18 +405,37 @@
                 <!-- Job 3 -->
                 <div class="job-card">
                     <div class="job-card-header">
-                        <h2 class="job-title">Finance Intern</h2>
-                        <span class="job-type-badge">Internship</span>
+                        <h2 class="job-title">Planning Engineer</h2>
+                        <span class="job-type-badge">Consultant</span>
                     </div>
                     <div class="job-meta">
                         <span class="meta-item" style="font-weight: 600; color: var(--text-main);">Menasco</span>
-                        <span class="meta-item">Finance</span>
-                        <span class="meta-item">On-site</span>
-                        <span class="meta-item">Dubai</span>
+                        <span class="meta-item">Planning</span>
+                        <span class="meta-item">Consultant</span>
+                        <span class="meta-item">KSA</span>
+                        <span class="meta-item">5+ years</span>
+                    </div>
+                    <p class="job-description">
+                        Prepare MEP project schedules, track milestones, and coordinate reporting for engineering, procurement, and site execution activities.
+                    </p>
+                    <a href="#" class="view-details-btn">View Details</a>
+                </div>
+
+                <!-- Job 4 -->
+                <div class="job-card">
+                    <div class="job-card-header">
+                        <h2 class="job-title">Procurement Officer</h2>
+                        <span class="job-type-badge">Internship</span>
+                    </div>
+                    <div class="job-meta">
+                        <span class="meta-item" style="font-weight: 600; color: var(--text-main);">Macs</span>
+                        <span class="meta-item">Procurement</span>
+                        <span class="meta-item">Internship</span>
+                        <span class="meta-item">KSA</span>
                         <span class="meta-item">Fresher</span>
                     </div>
                     <p class="job-description">
-                        Assist the finance team with reporting, documentation, and data entry.
+                        Assist the MEP procurement team with vendor coordination, material tracking, quotation follow-ups, and documentation for ongoing projects.
                     </p>
                     <a href="#" class="view-details-btn">View Details</a>
                 </div>
