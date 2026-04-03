@@ -503,6 +503,214 @@
             color: var(--text-muted);
         }
 
+
+        .modal.large { width: min(1080px, 100%); }
+
+        .docs-finalization-shell {
+            background: #f8fafc;
+        }
+
+        .docs-summary-card {
+            background: #081a44;
+            color: #fff;
+            border-radius: 16px;
+            padding: 22px 24px;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+            margin-bottom: 22px;
+        }
+
+        .docs-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(150px, 1fr));
+            gap: 16px;
+            padding-bottom: 18px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .docs-summary-item .label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.68);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .docs-summary-item .value {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .docs-result-badge {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            background: #22c55e;
+        }
+
+        .docs-result-badge.pending {
+            background: #64748b;
+        }
+
+        .docs-remarks {
+            margin-bottom: 18px;
+        }
+
+        .docs-remarks .label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.68);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .docs-remarks p {
+            font-size: 15px;
+            font-style: italic;
+            color: #fff;
+        }
+
+        .docs-summary-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .docs-summary-actions .btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: #fff;
+        }
+
+        .docs-summary-actions .btn:hover {
+            background: rgba(255,255,255,0.16);
+        }
+
+        .docs-request-card {
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: #fff;
+            padding: 22px 22px 24px;
+        }
+
+        .docs-request-header {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 800;
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .docs-request-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+            font-size: 15px;
+        }
+
+        .docs-request-status .status-pill {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #0f172a;
+            background: #e2e8f0;
+        }
+
+        .docs-request-status .status-pill.requested {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .docs-request-status .status-pill.received {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .docs-request-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+        }
+
+        .docs-request-block h3 {
+            font-size: 15px;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .docs-checklist {
+            display: grid;
+            gap: 10px;
+        }
+
+        .docs-checklist label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .docs-checklist input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary-color);
+        }
+
+        .docs-message-box {
+            width: 100%;
+            min-height: 128px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 14px;
+            font: inherit;
+            resize: vertical;
+            color: var(--text-main);
+            background: #fff;
+        }
+
+        .docs-uploaded-list {
+            margin-top: 12px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+        }
+
+        .docs-uploaded-list h4 {
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .docs-uploaded-list ul {
+            padding-left: 18px;
+        }
+
+        .docs-uploaded-list li {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
         @media print {
             body { background: #fff; padding: 0; }
             .screen-container { border: none; box-shadow: none; max-width: 100%; }
@@ -552,14 +760,15 @@
                     <select class="select-filter">
                         <option selected>Status</option>
                         <option>New</option>
-                        <option>Shortlisted</option>
-                        <option>Interviewed - Recommended</option>
+                        <option selected>Assign Interviewer (By HR)</option>
+                        <option>Sent to Concerned Department for Interview</option>
+                        <option selected>Interviewed - Recommended</option>
                         <option>Interviewed - Rejected</option>
                         <option>Sent to COO</option>
                         <option>COO Approved</option>
                         <option>COO Rejected</option>
                         <option>Visa in Process</option>
-                        <option>Visa Issued</option>
+                        <option selected>Visa Issued</option>
                         <option>HR Rejected</option>
                     </select>
                     <select class="select-filter">
@@ -603,7 +812,8 @@
                                 <td>
                                     <select class="status-select">
                                         <option>New</option>
-                                        <option>Shortlisted</option>
+                                        <option>Assign Interviewer (By HR)</option>
+                                        <option>Sent to Concerned Department for Interview</option>
                                         <option>Interviewed - Recommended</option>
                                         <option>Interviewed - Rejected</option>
                                         <option>Sent to COO</option>
@@ -641,7 +851,8 @@
                                 <td>
                                     <select class="status-select">
                                         <option>New</option>
-                                        <option>Shortlisted</option>
+                                        <option>Assign Interviewer (By HR)</option>
+                                        <option>Sent to Concerned Department for Interview</option>
                                         <option selected>Interviewed - Recommended</option>
                                         <option>Interviewed - Rejected</option>
                                         <option>Sent to COO</option>
@@ -679,7 +890,8 @@
                                 <td>
                                     <select class="status-select">
                                         <option>New</option>
-                                        <option selected>Shortlisted</option>
+                                        <option selected>Assign Interviewer (By HR)</option>
+                                        <option>Sent to Concerned Department for Interview</option>
                                         <option>Interviewed - Recommended</option>
                                         <option>Interviewed - Rejected</option>
                                         <option>Sent to COO</option>
@@ -717,7 +929,8 @@
                                 <td>
                                     <select class="status-select">
                                         <option selected>New</option>
-                                        <option>Shortlisted</option>
+                                        <option>Assign Interviewer (By HR)</option>
+                                        <option>Sent to Concerned Department for Interview</option>
                                         <option>Interviewed - Recommended</option>
                                         <option>Interviewed - Rejected</option>
                                         <option>Sent to COO</option>
@@ -789,7 +1002,7 @@
     <script>
         const stepLabels = {
             application: "Application Made",
-            shortlisted: "HR Shortlisted",
+            shortlisted: "HR Sent to Concerned Department for Interview",
             invite: "Invited for Interview",
             assessment: "Interview Assessment",
             hrApproval: "HR Approval",
@@ -924,7 +1137,7 @@
                 department: "Planning",
                 organisation: "Menasco",
                 applicationDate: "30 Mar 2026",
-                status: "Shortlisted",
+                status: "Assign Interviewer (By HR)",
                 workLocation: "KSA",
                 workMode: "Onsite",
                 comments: {
@@ -1046,6 +1259,39 @@
         document.addEventListener('click', () => {
             document.querySelectorAll('.comments-menu').forEach(menu => menu.classList.remove('open'));
         });
+
+
+        function setDetailModalSize(size) {
+            const detailModal = document.querySelector('#detailOverlay .modal');
+            if (!detailModal) return;
+            detailModal.classList.remove('small', 'large');
+            detailModal.classList.add(size === 'large' ? 'large' : 'small');
+        }
+
+        function getInterviewBadge(result) {
+            if (!result || result === 'Pending') {
+                return '<span class="docs-result-badge pending">Pending</span>';
+            }
+            return `<span class="docs-result-badge">${result}</span>`;
+        }
+
+        function getDocsStatus(candidate, isReceived) {
+            if (isReceived && candidate.docs.receivedItems && candidate.docs.receivedItems.length) return 'Received';
+            if (!isReceived && candidate.docs.requestedOn && candidate.docs.requestedOn !== 'Pending') return 'Requested';
+            return 'Not Requested';
+        }
+
+        function buildDocChecklist(items, selectedItems) {
+            return items.map(item => {
+                const checked = selectedItems.includes(item) ? 'checked' : '';
+                return `<label><input type="checkbox" ${checked} disabled><span>${item}</span></label>`;
+            }).join('');
+        }
+
+        function getCandidateMessage(candidate) {
+            return `Please upload the requested documents for the ${candidate.job} position using the secure link provided by HR.`;
+        }
+
 
         function openJourney(candidateKey) {
             const c = candidates[candidateKey];
@@ -1176,40 +1422,95 @@
             );
         }
 
+
         function openDocsModal(candidateKey, stepKey) {
             const c = candidates[candidateKey];
             const isReceived = stepKey === 'docsReceived';
-            const title = isReceived ? 'Documents Received' : 'Requested Documents';
-            const subtitle = c.name + ' - ' + c.job;
-            const items = isReceived ? c.docs.receivedItems : c.docs.requestedItems;
-            const dateLabel = isReceived ? 'Received On' : 'Requested On';
-            const dateValue = isReceived ? c.docs.receivedOn : c.docs.requestedOn;
-            const list = items.length ? items.map(item => `<li>${item}</li>`).join('') : '<li>No documents available yet.</li>';
+            const statusText = getDocsStatus(c, isReceived);
+            const allItems = [
+                'Passport Copy',
+                'Updated CV',
+                'Graduation Certificate',
+                'Current Visa Copy',
+                'Passport Size Photo'
+            ];
+            const selectedItems = isReceived && c.docs.receivedItems.length ? c.docs.receivedItems : c.docs.requestedItems;
+            const buttonLabel = isReceived ? 'View Received Documents' : 'Request Documents';
+            const uploadedList = isReceived && c.docs.receivedItems.length
+                ? `<div class="docs-uploaded-list">
+                        <h4>Documents Received</h4>
+                        <ul>${c.docs.receivedItems.map(item => `<li>${item}</li>`).join('')}</ul>
+                   </div>`
+                : '';
 
-            openSimpleModal(
-                title,
-                subtitle,
-                `
-                <div class="two-col">
-                    <div class="info-box">
-                        <span class="label">${dateLabel}</span>
-                        <span class="value">${dateValue}</span>
+            setDetailModalSize('large');
+            document.getElementById('detailTitle').textContent = isReceived ? 'Documents Received' : 'Request Documents';
+            document.getElementById('detailSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('detailBody').innerHTML = `
+                <div class="docs-finalization-shell">
+                    <div class="docs-summary-card">
+                        <div class="docs-summary-grid">
+                            <div class="docs-summary-item">
+                                <span class="label">Candidate Name</span>
+                                <span class="value">${c.name}</span>
+                            </div>
+                            <div class="docs-summary-item">
+                                <span class="label">Applied Job</span>
+                                <span class="value">${c.job}</span>
+                            </div>
+                            <div class="docs-summary-item">
+                                <span class="label">Department</span>
+                                <span class="value">${c.department}</span>
+                            </div>
+                            <div class="docs-summary-item">
+                                <span class="label">Interview Result</span>
+                                ${getInterviewBadge(c.assessment.result)}
+                            </div>
+                        </div>
+
+                        <div class="docs-remarks">
+                            <span class="label">Manager Remarks</span>
+                            <p>"${c.comments.manager}"</p>
+                        </div>
+
+                        <div class="docs-summary-actions">
+                            <button class="btn" onclick="openApplicationDetails('${candidateKey}')">View Candidate Details</button>
+                            <button class="btn" onclick="openAssessmentDetails('${candidateKey}')">View Assessment</button>
+                            <button class="btn" onclick="closeModal('detailOverlay')">View Journey</button>
+                        </div>
                     </div>
-                    <div class="info-box">
-                        <span class="label">Candidate</span>
-                        <span class="value">${c.name}</span>
+
+                    <div class="docs-request-card">
+                        <div class="docs-request-header">Section 1: Document Request</div>
+
+                        <div class="docs-request-status">
+                            <span>Document Request Status:</span>
+                            <span class="status-pill ${statusText.toLowerCase().replace(/\s+/g, '-')}">${statusText}</span>
+                        </div>
+
+                        <div class="docs-request-grid">
+                            <div class="docs-request-block">
+                                <h3>Requested Documents:</h3>
+                                <div class="docs-checklist">
+                                    ${buildDocChecklist(allItems, selectedItems)}
+                                </div>
+                                ${uploadedList}
+                            </div>
+
+                            <div class="docs-request-block">
+                                <h3>Message to Candidate:</h3>
+                                <textarea class="docs-message-box" readonly>${getCandidateMessage(c)}</textarea>
+                                <div class="modal-actions" style="margin-top: 16px; justify-content: stretch;">
+                                    <button class="btn btn-primary" style="width: 100%;" onclick="closeModal('detailOverlay')">${buttonLabel}</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="list-box" style="margin-top:12px;">
-                    <h3>${title} List</h3>
-                    <ul>${list}</ul>
-                </div>
-                <div class="modal-actions">
-                    <button class="btn btn-primary" onclick="closeModal('detailOverlay')">Close</button>
-                </div>
-                `
-            );
+            `;
+            document.getElementById('detailOverlay').classList.add('show');
         }
+
 
         function openVisaModal(candidateKey, stepKey) {
             const c = candidates[candidateKey];
@@ -1319,6 +1620,7 @@
         }
 
         function openSimpleModal(title, subtitle, bodyHtml) {
+            setDetailModalSize('small');
             document.getElementById('detailTitle').textContent = title;
             document.getElementById('detailSubtitle').textContent = subtitle;
             document.getElementById('detailBody').innerHTML = bodyHtml;
