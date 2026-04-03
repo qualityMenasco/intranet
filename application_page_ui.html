@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Information - Menasco</title>
+    <title>Candidate Applications - HR View</title>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -13,616 +13,1327 @@
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --input-bg: #ffffff;
-            --section-bg: #f1f5f9;
-            --required-color: #ef4444;
+            --success-color: #16a34a;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+            --info-color: #2563eb;
+            --soft-blue: #eff6ff;
+            --soft-green: #f0fdf4;
+            --soft-amber: #fffbeb;
+            --soft-red: #fef2f2;
+            --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #cbd5e1; /* Desktop background color */
+            background: #cbd5e1;
             color: var(--text-main);
             line-height: 1.5;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
+            padding: 36px;
             min-height: 100vh;
         }
 
-        /* Computer Screen Container */
         .screen-container {
             width: 100%;
-            max-width: 1100px;
-            background-color: var(--bg-color);
-            border-radius: 12px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border: 12px solid #334155; /* Monitor frame */
+            max-width: 1380px;
+            margin: 0 auto;
+            background: var(--bg-color);
+            border-radius: 14px;
+            border: 12px solid #334155;
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.25);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
-        /* Browser/App Header */
         .app-header {
-            background-color: #ffffff;
+            background: #fff;
             border-bottom: 1px solid var(--border-color);
-            padding: 24px 32px;
+            padding: 22px 30px;
         }
 
         .app-header h1 {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--text-main);
+            font-size: 25px;
+            font-weight: 700;
             margin-bottom: 4px;
         }
 
         .app-header p {
-            font-size: 15px;
             color: var(--text-muted);
-        }
-
-        /* Main Content Area */
-        .main-content {
-            padding: 32px;
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-
-        /* Read-only Job Info Section */
-        .job-info-banner {
-            background-color: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 32px;
-        }
-
-        .job-info-banner h2 {
             font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #1e40af;
-            margin-bottom: 12px;
-            letter-spacing: 0.05em;
         }
 
-        .job-info-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 16px;
+        .main-content {
+            padding: 28px 30px 22px;
         }
 
-        .job-info-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .job-info-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #60a5fa;
-            text-transform: uppercase;
-        }
-
-        .job-info-value {
-            font-size: 15px;
-            font-weight: 700;
-            color: #1e3a8a;
-        }
-
-        /* Form Sections */
-        .form-section {
+        .action-bar, .table-container {
             background: var(--card-bg);
-            border-radius: 8px;
             border: 1px solid var(--border-color);
-            margin-bottom: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
         }
 
-        .section-header {
-            background-color: var(--section-bg);
-            padding: 12px 24px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
+        .action-bar {
+            padding: 22px;
+            margin-bottom: 18px;
         }
 
-        .section-body {
-            padding: 24px;
-        }
-
-        /* Grid Layout for Form Fields */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .form-group {
+        .search-row, .filter-row {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-row { margin-bottom: 14px; }
+
+        .search-input, .select-filter, .status-select {
+            border: 1px solid var(--border-color);
+            background: #fff;
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-input {
+            flex: 1 1 340px;
+            min-width: 240px;
+            padding: 11px 14px;
+        }
+
+        .select-filter {
+            min-width: 165px;
+            padding: 10px 12px;
+        }
+
+        .status-select {
+            min-width: 182px;
+            padding: 8px 10px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             gap: 6px;
         }
 
-        .form-group.full-width {
-            grid-column: span 2;
+        .btn-primary {
+            background: var(--primary-color);
+            color: #fff;
         }
 
-        label {
-            font-size: 13px;
-            font-weight: 600;
+        .btn-primary:hover { background: var(--primary-hover); }
+
+        .btn-outline {
+            background: #fff;
             color: var(--text-main);
-        }
-
-        label .required {
-            color: var(--required-color);
-            margin-left: 2px;
-        }
-
-        input, select, textarea {
-            padding: 10px 14px;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 14px;
-            width: 100%;
-            background-color: var(--input-bg);
-            color: var(--text-main);
-            transition: border-color 0.2s;
         }
 
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        .btn-outline:hover { background: #f8fafc; }
+
+        .journey-btn {
+            padding: 7px 12px;
+            font-size: 12px;
+            white-space: nowrap;
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        /* Experience Entry Styling */
-        .experience-entry {
-            padding: 16px;
-            background-color: #f8fafc;
-            border: 1px dashed var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 16px;
-        }
-
-        .experience-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .btn-add {
-            padding: 8px 16px;
-            background-color: white;
-            border: 1px solid var(--primary-color);
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
+        .clear-filters {
             color: var(--primary-color);
             font-size: 13px;
-            margin-bottom: 20px;
+            font-weight: 600;
+            text-decoration: none;
         }
 
-        .btn-add:hover {
-            background-color: var(--primary-color);
-            color: white;
+        .summary-info {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 2px 14px;
         }
 
-        /* File Upload Styling */
-        .file-upload-group {
-            display: flex;
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1240px;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px 16px;
+            background: #f8fafc;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 15px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background: #f8fafc; }
+
+        .candidate-name { font-weight: 700; }
+        .muted-small { display: block; color: var(--text-muted); font-size: 12px; margin-top: 3px; }
+
+        .comments-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
+        .comments-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 200px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 8px;
+            display: none;
+            z-index: 20;
+        }
+
+        .comments-menu.open { display: block; }
+
+        .comments-menu button {
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: none;
+            padding: 9px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        .comments-menu button:hover {
+            background: #f8fafc;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            display: none;
             align-items: center;
-            gap: 12px;
-            padding: 10px;
-            border: 1px dashed var(--border-color);
-            border-radius: 6px;
-            background-color: #fcfcfc;
+            justify-content: center;
+            padding: 24px;
+            z-index: 1000;
         }
 
-        .file-upload-label {
+        .modal-overlay.show { display: flex; }
+
+        .modal {
+            background: #fff;
+            width: min(1100px, 100%);
+            max-height: 90vh;
+            overflow: auto;
+            border-radius: 16px;
+            box-shadow: 0 30px 70px rgba(15, 23, 42, 0.28);
+            border: 1px solid var(--border-color);
+        }
+
+        .modal.small { width: min(620px, 100%); }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .modal-header h2 {
+            font-size: 22px;
+            margin-bottom: 3px;
+        }
+
+        .modal-header p {
             font-size: 13px;
             color: var(--text-muted);
         }
 
-        .uploaded-file-name {
-            margin-top: 6px;
+        .close-btn {
+            border: none;
+            background: #eff6ff;
+            color: var(--primary-color);
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            font-size: 18px;
+            cursor: pointer;
+            flex: 0 0 auto;
+        }
+
+        .modal-body {
+            padding: 22px 24px 24px;
+        }
+
+        .journey-top {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .summary-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .summary-card .label {
+            display: block;
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .summary-card .value {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .journey-note {
+            background: var(--soft-blue);
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            font-size: 13px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+        }
+
+        .step-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .step-item {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: #fff;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            text-align: left;
+        }
+
+        .step-item.clickable {
+            cursor: pointer;
+        }
+
+        .step-item.clickable:hover {
+            border-color: #93c5fd;
+            background: #f8fbff;
+        }
+
+        .step-left {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .step-index {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex: 0 0 auto;
+        }
+
+        .step-content strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .step-content span {
+            display: block;
             font-size: 12px;
             color: var(--text-muted);
         }
 
-        /* Footer Actions */
-        .footer-actions {
+        .step-state {
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .completed {
+            border-color: #bbf7d0;
+            background: var(--soft-green);
+        }
+
+        .completed .step-index {
+            background: var(--success-color);
+            color: #fff;
+        }
+
+        .completed .step-state { color: var(--success-color); }
+
+        .active {
+            border-color: #93c5fd;
+            background: var(--soft-blue);
+        }
+
+        .active .step-index {
+            background: var(--info-color);
+            color: #fff;
+        }
+
+        .active .step-state { color: var(--info-color); }
+
+        .pending .step-index {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .pending .step-state { color: #64748b; }
+
+        .disabled {
+            opacity: 0.65;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .info-box {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .info-box .label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .info-box .value {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 14px;
+        }
+
+        .list-box {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .list-box h3 {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .list-box ul {
+            padding-left: 18px;
+        }
+
+        .list-box li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .modal-actions {
             display: flex;
             justify-content: flex-end;
-            gap: 12px;
-            padding: 24px 32px;
-            background: white;
-            border-top: 1px solid var(--border-color);
+            gap: 10px;
+            margin-top: 18px;
         }
 
-        .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-            display: inline-flex;
+        .footer-bar {
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            border-top: 1px solid var(--border-color);
+            background: #fff;
         }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-outline {
-            background-color: white;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-        }
-
-        .btn-outline:hover {
-            background-color: #f1f5f9;
-        }
-
-        .btn-cancel {
-            background-color: transparent;
+        .page-info {
+            font-size: 14px;
             color: var(--text-muted);
         }
 
-        .btn-cancel:hover {
-            color: var(--text-main);
-            text-decoration: underline;
+        @media print {
+            body { background: #fff; padding: 0; }
+            .screen-container { border: none; box-shadow: none; max-width: 100%; }
+            .action-bar .btn, .journey-btn, .comments-wrap, .status-select, .clear-filters, .modal-overlay { display: none !important; }
+            .table-scroll { overflow: visible; }
+            table { min-width: 100%; }
         }
 
-        /* Print Optimization */
-        @media print {
-            body {
-                background-color: white;
-                padding: 0;
-            }
-            .screen-container {
-                border: none;
-                box-shadow: none;
-                max-width: 100%;
-            }
-            .main-content {
-                overflow: visible;
-            }
-            .btn {
-                border: 1px solid #ccc;
-                color: black;
-                background: none;
-            }
+        @media (max-width: 900px) {
+            .journey-top, .two-col, .info-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-
     <div class="screen-container">
-        <!-- App Header -->
         <header class="app-header">
-            <h1>Application Information</h1>
-            <p>Complete the form below to submit your application for the BIM Coordinator position.</p>
+            <h1>Candidate Applications - HR View</h1>
+            <p>Review applications, update status, check journey progress, and manage hiring actions for MEP positions.</p>
         </header>
 
-        <!-- Main Content -->
         <main class="main-content">
-            
-            <!-- Applied Job Info (Read-only) -->
-            <section class="job-info-banner">
-                
-                <div class="job-info-grid">
-                    <div class="job-info-item">
-                        <span class="job-info-label">Job Title</span>
-                        <span class="job-info-value">BIM Coordinator</span>
-                    </div>
-                    <div class="job-info-item">
-                        <span class="job-info-label">Organization</span>
-                        <span class="job-info-value">Menasco</span>
-                    </div>
-                    <div class="job-info-item">
-                        <span class="job-info-label">Department</span>
-                        <span class="job-info-value">Engineering</span>
-                    </div>
-                    <div class="job-info-item">
-                        <span class="job-info-label">Employment Type</span>
-                        <span class="job-info-value">Permanent</span>
-                    </div>
-                    <div class="job-info-item">
-                        <span class="job-info-label">Work Location</span>
-                        <span class="job-info-value">UAE</span>
-                    </div>
-                    <div class="job-info-item">
-                        <span class="job-info-label">Work Mode</span>
-                        <span class="job-info-value">Onsite</span>
-                    </div>
+            <section class="action-bar">
+                <div class="search-row">
+                    <input type="text" class="search-input" placeholder="Search by candidate name / applied job / email / phone">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+                <div class="filter-row">
+                    <select class="select-filter">
+                        <option selected>Applied Job</option>
+                        <option>BIM Coordinator</option>
+                        <option>QAQC Engineer</option>
+                        <option>Planning Engineer</option>
+                        <option>Procurement Officer</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Department</option>
+                        <option>Engineering</option>
+                        <option>QAQC</option>
+                        <option>Planning</option>
+                        <option>Procurement</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Organization</option>
+                        <option>Menasco</option>
+                        <option>Macs</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Status</option>
+                        <option>New</option>
+                        <option>Shortlisted</option>
+                        <option>Interviewed - Recommended</option>
+                        <option>Interviewed - Rejected</option>
+                        <option>Sent to COO</option>
+                        <option>COO Approved</option>
+                        <option>COO Rejected</option>
+                        <option>Visa in Process</option>
+                        <option>Visa Issued</option>
+                        <option>HR Rejected</option>
+                    </select>
+                    <select class="select-filter">
+                        <option selected>Application Date</option>
+                        <option>01 Apr 2026</option>
+                        <option>31 Mar 2026</option>
+                        <option>30 Mar 2026</option>
+                        <option>29 Mar 2026</option>
+                    </select>
+                    <a href="#" class="clear-filters">Clear Filters</a>
                 </div>
             </section>
 
-            <!-- SECTION 1: Personal Information -->
-            <section class="form-section">
-                <div class="section-header">SECTION 1: Personal Information</div>
-                <div class="section-body">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>First Name <span class="required">*</span></label>
-                            <input type="text" value="Mohammed">
-                        </div>
-                        <div class="form-group">
-                            <label>Middle Name</label>
-                            <input type="text" value="Ali">
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name <span class="required">*</span></label>
-                            <input type="text" value="Khan">
-                        </div>
-                        <div class="form-group">
-                            <label>Preferred Name</label>
-                            <input type="text" value="Ali">
-                        </div>
-                        <div class="form-group">
-                            <label>Date of Birth <span class="required">*</span></label>
-                            <input type="date" value="1994-06-18">
-                        </div>
-                        <div class="form-group">
-                            <label>Gender <span class="required">*</span></label>
-                            <select>
-                                <option value="">Select Gender</option>
-                                <option selected>Male</option>
-                                <option>Female</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Marital Status</label>
-                            <select>
-                                <option value="">Select Status</option>
-                                <option>Single</option>
-                                <option selected>Married</option>
-                                <option>Divorced</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Number of Children</label>
-                            <input type="number" value="2">
-                        </div>
-                        <div class="form-group">
-                            <label>Nationality <span class="required">*</span></label>
-                            <select>
-                                <option value="">Select Nationality</option>
-                                <option>United Arab Emirates</option>
-                                <option>United Kingdom</option>
-                                <option>United States</option>
-                                <option selected>India</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <div class="summary-info">Showing 4 applications</div>
 
-            <!-- SECTION 2: Contact Information -->
-            <section class="form-section">
-                <div class="section-header">SECTION 2: Contact Information</div>
-                <div class="section-body">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Personal Email <span class="required">*</span></label>
-                            <input type="email" value="mohammed.khan@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Personal Phone <span class="required">*</span></label>
-                            <input type="tel" value="+971 50 123 4567">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 3: Address Information -->
-            <section class="form-section">
-                <div class="section-header">SECTION 3: Address Information</div>
-                <div class="section-body">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Home City</label>
-                            <input type="text" value="Dubai">
-                        </div>
-                        <div class="form-group">
-                            <label>Home Area</label>
-                            <input type="text" value="Al Nahda">
-                        </div>
-                        <div class="form-group">
-                            <label>Home Street</label>
-                            <input type="text" value="Al Ittihad Road">
-                        </div>
-                        <div class="form-group">
-                            <label>Home Building</label>
-                            <input type="text" value="Al Noor Tower">
-                        </div>
-                        <div class="form-group">
-                            <label>Flat / Villa Number</label>
-                            <input type="text" value="1204">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 4: Education -->
-            <section class="form-section">
-                <div class="section-header">SECTION 4: Education</div>
-                <div class="section-body">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Education Level</label>
-                            <select>
-                                <option value="">Select Level</option>
-                                <option>High School</option>
-                                <option selected>Bachelor's Degree</option>
-                                <option>Master's Degree</option>
-                                <option>PhD</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Education Discipline</label>
-                            <input type="text" value="Mechanical Engineering">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 5: Work Experience -->
-            <section class="form-section">
-                <div class="section-header">SECTION 5: Work Experience</div>
-                <div class="section-body">
-                    <div class="experience-entry">
-                        <span class="experience-title">Experience Entry 1</span>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>Company Name</label>
-                                <input type="text" value="Al Noor MEP Contracting LLC">
-                            </div>
-                            <div class="form-group">
-                                <label>Job Title</label>
-                                <input type="text" value="BIM Modeler - MEP">
-                            </div>
-                            <div class="form-group">
-                                <label>Start Date</label>
-                                <input type="date" value="2020-02-01">
-                            </div>
-                            <div class="form-group">
-                                <label>End Date</label>
-                                <input type="date" value="2025-01-31">
-                            </div>
-                            <div class="form-group full-width">
-                                <label>Responsibilities / Summary</label>
-                                <textarea>Prepared and coordinated MEP BIM models, supported clash detection reviews, issued model updates, and coordinated with engineering and site teams for project delivery.</textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn-add">+ Add Another Experience</button>
-                    <div class="form-group" style="width: 200px;">
-                        <label>Total Years of Experience <span class="required">*</span></label>
-                        <input type="number" value="5">
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 6: Skills & Languages -->
-            <section class="form-section">
-                <div class="section-header">SECTION 6: Skills & Languages</div>
-                <div class="section-body">
-                    <div class="form-grid">
-                        <div class="form-group full-width">
-                            <label>Languages Spoken</label>
-                            <input type="text" value="English, Hindi, Urdu">
-                        </div>
-                        <div class="form-group full-width">
-                            <label>Skills / Competencies</label>
-                            <textarea>Revit MEP, Navisworks, AutoCAD, BIM 360, Clash Detection, Shop Drawings, MEP Coordination, Model Review, Quantity Takeoff</textarea>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 7: Interests / Social Activities -->
-            <section class="form-section">
-                <div class="section-header">SECTION 7: Interests / Social Activities</div>
-                <div class="section-body">
-                    <div class="form-group full-width">
-                        <label>Hobbies / Interests</label>
-                        <textarea>Technical drafting research, model coordination learning, football, and reading about MEP project delivery standards.</textarea>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 8: Availability -->
-            <section class="form-section">
-                <div class="section-header">SECTION 8: Availability</div>
-                <div class="section-body">
-                    <div class="form-group" style="width: 250px;">
-                        <label>Available Start Date <span class="required">*</span></label>
-                        <input type="date" value="2026-05-01">
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 9: Documents Upload -->
-            <section class="form-section">
-                <div class="section-header">SECTION 9: Documents Upload</div>
-                <div class="section-body">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Photo Upload</label>
-                            <div class="file-upload-group">
-                                <input type="file" style="border:none; padding:0;">
-                            </div>
-                            <div class="uploaded-file-name">Selected file: mohammed_khan_photo.jpg</div>
-                        </div>
-                        <div class="form-group">
-                            <label>Passport Upload (PDF)</label>
-                            <div class="file-upload-group">
-                                <input type="file" accept=".pdf" style="border:none; padding:0;">
-                            </div>
-                            <div class="uploaded-file-name">Selected file: passport_mohammed_khan.pdf</div>
-                        </div>
-                        <div class="form-group">
-                            <label>CV / Resume Upload <span class="required">*</span></label>
-                            <div class="file-upload-group">
-                                <input type="file" style="border:none; padding:0;">
-                            </div>
-                            <div class="uploaded-file-name">Selected file: mohammed_khan_bim_cv.pdf</div>
-                        </div>
-                        <div class="form-group">
-                            <label>Graduation Certificate Upload</label>
-                            <div class="file-upload-group">
-                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="border:none; padding:0;">
-                            </div>
-                            <div class="uploaded-file-name">Selected file: graduation_certificate_btech_mechanical.pdf</div>
-                        </div>
-                        <div class="form-group">
-                            <label>Current Visa Upload</label>
-                            <div class="file-upload-group">
-                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" style="border:none; padding:0;">
-                            </div>
-                            <div class="uploaded-file-name">Selected file: current_uae_visa_copy.pdf</div>
-                        </div>
-                    </div>
+            <section class="table-container">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Candidate Name</th>
+                                <th>Applied Job</th>
+                                <th>Department</th>
+                                <th>Organisation</th>
+                                <th>Application Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="candidate-name">Mohammed Khan</span>
+                                    <span class="muted-small">mohammed.khan@email.com</span>
+                                </td>
+                                <td>BIM Coordinator</td>
+                                <td>Engineering</td>
+                                <td>Menasco</td>
+                                <td>01 Apr 2026</td>
+                                <td>
+                                    <select class="status-select">
+                                        <option>New</option>
+                                        <option>Shortlisted</option>
+                                        <option>Interviewed - Recommended</option>
+                                        <option>Interviewed - Rejected</option>
+                                        <option>Sent to COO</option>
+                                        <option>COO Approved</option>
+                                        <option>COO Rejected</option>
+                                        <option>Visa in Process</option>
+                                        <option selected>Visa Issued</option>
+                                        <option>HR Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline journey-btn" onclick="openJourney('mohammed')">View Journey</button>
+                                </td>
+                                <td>
+                                    <div class="comments-wrap">
+                                        <button class="btn btn-outline journey-btn" onclick="toggleComments(event, 'comments-mohammed')">Comments ▼</button>
+                                        <div class="comments-menu" id="comments-mohammed">
+                                            <button onclick="openComment('mohammed','hr')">HR Comments</button>
+                                            <button onclick="openComment('mohammed','interview')">Interview Comments</button>
+                                            <button onclick="openComment('mohammed','manager')">Manager Comments</button>
+                                            <button onclick="openComment('mohammed','coo')">COO Comments</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="candidate-name">Ayesha Rahman</span>
+                                    <span class="muted-small">ayesha.rahman@email.com</span>
+                                </td>
+                                <td>QAQC Engineer</td>
+                                <td>QAQC</td>
+                                <td>Macs</td>
+                                <td>31 Mar 2026</td>
+                                <td>
+                                    <select class="status-select">
+                                        <option>New</option>
+                                        <option>Shortlisted</option>
+                                        <option selected>Interviewed - Recommended</option>
+                                        <option>Interviewed - Rejected</option>
+                                        <option>Sent to COO</option>
+                                        <option>COO Approved</option>
+                                        <option>COO Rejected</option>
+                                        <option>Visa in Process</option>
+                                        <option>Visa Issued</option>
+                                        <option>HR Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline journey-btn" onclick="openJourney('ayesha')">View Journey</button>
+                                </td>
+                                <td>
+                                    <div class="comments-wrap">
+                                        <button class="btn btn-outline journey-btn" onclick="toggleComments(event, 'comments-ayesha')">Comments ▼</button>
+                                        <div class="comments-menu" id="comments-ayesha">
+                                            <button onclick="openComment('ayesha','hr')">HR Comments</button>
+                                            <button onclick="openComment('ayesha','interview')">Interview Comments</button>
+                                            <button onclick="openComment('ayesha','manager')">Manager Comments</button>
+                                            <button onclick="openComment('ayesha','coo')">COO Comments</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="candidate-name">Faisal Ahmed</span>
+                                    <span class="muted-small">faisal.ahmed@email.com</span>
+                                </td>
+                                <td>Planning Engineer</td>
+                                <td>Planning</td>
+                                <td>Menasco</td>
+                                <td>30 Mar 2026</td>
+                                <td>
+                                    <select class="status-select">
+                                        <option>New</option>
+                                        <option selected>Shortlisted</option>
+                                        <option>Interviewed - Recommended</option>
+                                        <option>Interviewed - Rejected</option>
+                                        <option>Sent to COO</option>
+                                        <option>COO Approved</option>
+                                        <option>COO Rejected</option>
+                                        <option>Visa in Process</option>
+                                        <option>Visa Issued</option>
+                                        <option>HR Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline journey-btn" onclick="openJourney('faisal')">View Journey</button>
+                                </td>
+                                <td>
+                                    <div class="comments-wrap">
+                                        <button class="btn btn-outline journey-btn" onclick="toggleComments(event, 'comments-faisal')">Comments ▼</button>
+                                        <div class="comments-menu" id="comments-faisal">
+                                            <button onclick="openComment('faisal','hr')">HR Comments</button>
+                                            <button onclick="openComment('faisal','interview')">Interview Comments</button>
+                                            <button onclick="openComment('faisal','manager')">Manager Comments</button>
+                                            <button onclick="openComment('faisal','coo')">COO Comments</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="candidate-name">Ritika Sharma</span>
+                                    <span class="muted-small">ritika.sharma@email.com</span>
+                                </td>
+                                <td>Procurement Officer</td>
+                                <td>Procurement</td>
+                                <td>Macs</td>
+                                <td>29 Mar 2026</td>
+                                <td>
+                                    <select class="status-select">
+                                        <option selected>New</option>
+                                        <option>Shortlisted</option>
+                                        <option>Interviewed - Recommended</option>
+                                        <option>Interviewed - Rejected</option>
+                                        <option>Sent to COO</option>
+                                        <option>COO Approved</option>
+                                        <option>COO Rejected</option>
+                                        <option>Visa in Process</option>
+                                        <option>Visa Issued</option>
+                                        <option>HR Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline journey-btn" onclick="openJourney('ritika')">View Journey</button>
+                                </td>
+                                <td>
+                                    <div class="comments-wrap">
+                                        <button class="btn btn-outline journey-btn" onclick="toggleComments(event, 'comments-ritika')">Comments ▼</button>
+                                        <div class="comments-menu" id="comments-ritika">
+                                            <button onclick="openComment('ritika','hr')">HR Comments</button>
+                                            <button onclick="openComment('ritika','interview')">Interview Comments</button>
+                                            <button onclick="openComment('ritika','manager')">Manager Comments</button>
+                                            <button onclick="openComment('ritika','coo')">COO Comments</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
         </main>
 
-        <!-- Footer Actions -->
-        <footer class="footer-actions">
-            <button class="btn btn-cancel">Cancel</button>
-            <button class="btn btn-outline">Save Draft</button>
-            <button class="btn btn-primary">Submit Application</button>
+        <footer class="footer-bar">
+            <button class="btn btn-outline">Previous</button>
+            <span class="page-info">Page 1 of 1</span>
+            <button class="btn btn-outline">Next</button>
         </footer>
     </div>
 
+    <div class="modal-overlay" id="journeyOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <h2 id="journeyTitle">Candidate Journey</h2>
+                    <p id="journeySubtitle">Hiring process tracking details</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('journeyOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="journey-top" id="journeySummary"></div>
+                <div class="journey-note">Click the highlighted steps below to open the related details, application record, interview assessment, document request, visa progress, employee ID, and onboarding confirmation.</div>
+                <div class="step-list" id="journeySteps"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="detailOverlay">
+        <div class="modal small">
+            <div class="modal-header">
+                <div>
+                    <h2 id="detailTitle">Details</h2>
+                    <p id="detailSubtitle">Supporting information</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('detailOverlay')">×</button>
+            </div>
+            <div class="modal-body" id="detailBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const stepLabels = {
+            application: "Application Made",
+            shortlisted: "HR Shortlisted",
+            invite: "Invited for Interview",
+            assessment: "Interview Assessment",
+            hrApproval: "HR Approval",
+            cooApproval: "COO Approval",
+            notified: "Candidate Notified for Selection",
+            requestDocs: "Requested Docs",
+            docsReceived: "Docs Received",
+            visaRequest: "Visa Request Sent to MOFA",
+            visaIssued: "Visa Issued",
+            employeeId: "Employee ID Generated and Start Date",
+            onboarded: "Onboarded"
+        };
+
+        const candidates = {
+            mohammed: {
+                name: "Mohammed Khan",
+                job: "BIM Coordinator",
+                department: "Engineering",
+                organisation: "Menasco",
+                applicationDate: "01 Apr 2026",
+                status: "Visa Issued",
+                workLocation: "UAE",
+                workMode: "Onsite",
+                comments: {
+                    hr: "Profile matched the BIM Coordinator role well. Candidate has relevant MEP coordination experience and UAE availability.",
+                    interview: "Strong command of Revit MEP and Navisworks. Good communication during coordination and clash review discussion.",
+                    manager: "Recommended for offer. Candidate can support engineering coordination and model issue tracking immediately.",
+                    coo: "Approved for hiring subject to visa completion and joining confirmation."
+                },
+                assessment: {
+                    interviewer: "Engineering Manager",
+                    date: "03 Apr 2026",
+                    score: "8.5 / 10",
+                    result: "Recommended",
+                    notes: "Candidate demonstrated good MEP coordination knowledge, Revit model management, and shop drawing support experience."
+                },
+                docs: {
+                    requestedOn: "05 Apr 2026",
+                    requestedItems: ["Passport Copy", "Updated CV", "Graduation Certificate", "Current Visa Copy", "Passport Size Photo"],
+                    receivedOn: "06 Apr 2026",
+                    receivedItems: ["Passport Copy", "Updated CV", "Graduation Certificate", "Current Visa Copy", "Passport Size Photo"]
+                },
+                visa: {
+                    requestDate: "07 Apr 2026",
+                    mofaReference: "MOFA-HR-2026-1845",
+                    currentStage: "Visa Issued",
+                    issueDate: "10 Apr 2026",
+                    notes: "Visa issuance completed. Visa step is done and the candidate can move to employee ID generation and joining confirmation."
+                },
+                employeeId: {
+                    employeeId: "MEN-ENG-2417",
+                    startDate: "20 Apr 2026",
+                    department: "Engineering",
+                    reportingTo: "Engineering Manager"
+                },
+                steps: [
+                    { key: "application", state: "completed", clickable: true },
+                    { key: "shortlisted", state: "completed", clickable: false },
+                    { key: "invite", state: "completed", clickable: false },
+                    { key: "assessment", state: "completed", clickable: true },
+                    { key: "hrApproval", state: "completed", clickable: false },
+                    { key: "cooApproval", state: "completed", clickable: false },
+                    { key: "notified", state: "completed", clickable: false },
+                    { key: "requestDocs", state: "completed", clickable: true },
+                    { key: "docsReceived", state: "completed", clickable: true },
+                    { key: "visaRequest", state: "completed", clickable: true },
+                    { key: "visaIssued", state: "completed", clickable: true },
+                    { key: "employeeId", state: "completed", clickable: true },
+                    { key: "onboarded", state: "active", clickable: true, requiresAllDone: true }
+                ]
+            },
+            ayesha: {
+                name: "Ayesha Rahman",
+                job: "QAQC Engineer",
+                department: "QAQC",
+                organisation: "Macs",
+                applicationDate: "31 Mar 2026",
+                status: "Interviewed - Recommended",
+                workLocation: "UAE",
+                workMode: "Onsite",
+                comments: {
+                    hr: "Candidate shortlisted after profile review. QAQC exposure in MEP projects is relevant.",
+                    interview: "Recommended after technical interview. Strong quality documentation knowledge.",
+                    manager: "Good fit for QAQC department and site follow-up role.",
+                    coo: "Not yet sent to COO."
+                },
+                assessment: {
+                    interviewer: "QAQC Manager",
+                    date: "02 Apr 2026",
+                    score: "8 / 10",
+                    result: "Recommended",
+                    notes: "Good knowledge of inspections, material submittals, and QAQC reporting on MEP projects."
+                },
+                docs: {
+                    requestedOn: "Pending",
+                    requestedItems: ["Passport Copy", "Updated CV", "Graduation Certificate", "Current Visa Copy"],
+                    receivedOn: "Pending",
+                    receivedItems: []
+                },
+                visa: {
+                    requestDate: "Pending",
+                    mofaReference: "Not available",
+                    currentStage: "Not started",
+                    issueDate: "Pending",
+                    notes: "Visa stage has not started yet because COO approval is still pending."
+                },
+                employeeId: {
+                    employeeId: "Pending",
+                    startDate: "Pending",
+                    department: "QAQC",
+                    reportingTo: "QAQC Manager"
+                },
+                steps: [
+                    { key: "application", state: "completed", clickable: true },
+                    { key: "shortlisted", state: "completed", clickable: false },
+                    { key: "invite", state: "completed", clickable: false },
+                    { key: "assessment", state: "active", clickable: true },
+                    { key: "hrApproval", state: "pending", clickable: false },
+                    { key: "cooApproval", state: "pending", clickable: false },
+                    { key: "notified", state: "pending", clickable: false },
+                    { key: "requestDocs", state: "pending", clickable: true },
+                    { key: "docsReceived", state: "pending", clickable: true },
+                    { key: "visaRequest", state: "pending", clickable: true },
+                    { key: "visaIssued", state: "pending", clickable: true },
+                    { key: "employeeId", state: "pending", clickable: true },
+                    { key: "onboarded", state: "pending", clickable: true, requiresAllDone: true }
+                ]
+            },
+            faisal: {
+                name: "Faisal Ahmed",
+                job: "Planning Engineer",
+                department: "Planning",
+                organisation: "Menasco",
+                applicationDate: "30 Mar 2026",
+                status: "Shortlisted",
+                workLocation: "KSA",
+                workMode: "Onsite",
+                comments: {
+                    hr: "Profile screened and shortlisted for further interview coordination.",
+                    interview: "Interview not completed yet.",
+                    manager: "Manager review not started.",
+                    coo: "Not yet applicable."
+                },
+                assessment: {
+                    interviewer: "Planning Manager",
+                    date: "Pending",
+                    score: "Pending",
+                    result: "Pending",
+                    notes: "Interview assessment is not available yet."
+                },
+                docs: {
+                    requestedOn: "Pending",
+                    requestedItems: ["Passport Copy", "Updated CV", "Graduation Certificate", "Current Visa Copy"],
+                    receivedOn: "Pending",
+                    receivedItems: []
+                },
+                visa: {
+                    requestDate: "Pending",
+                    mofaReference: "Not available",
+                    currentStage: "Not started",
+                    issueDate: "Pending",
+                    notes: "Visa step will open after selection and approvals."
+                },
+                employeeId: {
+                    employeeId: "Pending",
+                    startDate: "Pending",
+                    department: "Planning",
+                    reportingTo: "Planning Manager"
+                },
+                steps: [
+                    { key: "application", state: "completed", clickable: true },
+                    { key: "shortlisted", state: "active", clickable: false },
+                    { key: "invite", state: "pending", clickable: false },
+                    { key: "assessment", state: "pending", clickable: true },
+                    { key: "hrApproval", state: "pending", clickable: false },
+                    { key: "cooApproval", state: "pending", clickable: false },
+                    { key: "notified", state: "pending", clickable: false },
+                    { key: "requestDocs", state: "pending", clickable: true },
+                    { key: "docsReceived", state: "pending", clickable: true },
+                    { key: "visaRequest", state: "pending", clickable: true },
+                    { key: "visaIssued", state: "pending", clickable: true },
+                    { key: "employeeId", state: "pending", clickable: true },
+                    { key: "onboarded", state: "pending", clickable: true, requiresAllDone: true }
+                ]
+            },
+            ritika: {
+                name: "Ritika Sharma",
+                job: "Procurement Officer",
+                department: "Procurement",
+                organisation: "Macs",
+                applicationDate: "29 Mar 2026",
+                status: "New",
+                workLocation: "UAE",
+                workMode: "Onsite",
+                comments: {
+                    hr: "New application received and awaiting profile screening.",
+                    interview: "No interview comment yet.",
+                    manager: "Manager review not started.",
+                    coo: "Not applicable at current stage."
+                },
+                assessment: {
+                    interviewer: "Procurement Manager",
+                    date: "Pending",
+                    score: "Pending",
+                    result: "Pending",
+                    notes: "Interview assessment is not available yet."
+                },
+                docs: {
+                    requestedOn: "Pending",
+                    requestedItems: ["Passport Copy", "Updated CV", "Graduation Certificate", "Current Visa Copy"],
+                    receivedOn: "Pending",
+                    receivedItems: []
+                },
+                visa: {
+                    requestDate: "Pending",
+                    mofaReference: "Not available",
+                    currentStage: "Not started",
+                    issueDate: "Pending",
+                    notes: "Visa step has not started."
+                },
+                employeeId: {
+                    employeeId: "Pending",
+                    startDate: "Pending",
+                    department: "Procurement",
+                    reportingTo: "Procurement Manager"
+                },
+                steps: [
+                    { key: "application", state: "active", clickable: true },
+                    { key: "shortlisted", state: "pending", clickable: false },
+                    { key: "invite", state: "pending", clickable: false },
+                    { key: "assessment", state: "pending", clickable: true },
+                    { key: "hrApproval", state: "pending", clickable: false },
+                    { key: "cooApproval", state: "pending", clickable: false },
+                    { key: "notified", state: "pending", clickable: false },
+                    { key: "requestDocs", state: "pending", clickable: true },
+                    { key: "docsReceived", state: "pending", clickable: true },
+                    { key: "visaRequest", state: "pending", clickable: true },
+                    { key: "visaIssued", state: "pending", clickable: true },
+                    { key: "employeeId", state: "pending", clickable: true },
+                    { key: "onboarded", state: "pending", clickable: true, requiresAllDone: true }
+                ]
+            }
+        };
+
+        function toggleComments(event, id) {
+            event.stopPropagation();
+            document.querySelectorAll('.comments-menu').forEach(menu => {
+                if (menu.id !== id) menu.classList.remove('open');
+            });
+            const menu = document.getElementById(id);
+            menu.classList.toggle('open');
+        }
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.comments-menu').forEach(menu => menu.classList.remove('open'));
+        });
+
+        function openJourney(candidateKey) {
+            const c = candidates[candidateKey];
+            document.getElementById('journeyTitle').textContent = c.name + ' - Hiring Journey';
+            document.getElementById('journeySubtitle').textContent = c.job + ' | ' + c.department + ' | ' + c.organisation;
+
+            document.getElementById('journeySummary').innerHTML = `
+                <div class="summary-card"><span class="label">Candidate Name</span><span class="value">${c.name}</span></div>
+                <div class="summary-card"><span class="label">Applied Job</span><span class="value">${c.job}</span></div>
+                <div class="summary-card"><span class="label">Department</span><span class="value">${c.department}</span></div>
+                <div class="summary-card"><span class="label">Organisation</span><span class="value">${c.organisation}</span></div>
+                <div class="summary-card"><span class="label">Current Status</span><span class="value">${c.status}</span></div>
+            `;
+
+            const allDone = c.steps.slice(0, c.steps.length - 1).every(s => s.state === 'completed');
+            const stepsHtml = c.steps.map((step, index) => {
+                const classes = ['step-item', step.state];
+                if (step.clickable) classes.push('clickable');
+                const onboardDisabled = step.key === 'onboarded' && !allDone;
+                if (onboardDisabled) classes.push('disabled');
+                const stateLabel = step.state === 'completed' ? 'Completed' : step.state === 'active' ? 'In Progress' : 'Pending';
+                const clickHandler = step.clickable ? `onclick="handleStepClick('${candidateKey}','${step.key}', ${onboardDisabled})"` : '';
+
+                return `
+                    <button type="button" class="${classes.join(' ')}" ${clickHandler}>
+                        <div class="step-left">
+                            <div class="step-index">${index + 1}</div>
+                            <div class="step-content">
+                                <strong>${stepLabels[step.key]}</strong>
+                                <span>${getStepHint(step.key)}</span>
+                            </div>
+                        </div>
+                        <span class="step-state">${onboardDisabled ? 'Complete previous steps first' : stateLabel}</span>
+                    </button>
+                `;
+            }).join('');
+
+            document.getElementById('journeySteps').innerHTML = stepsHtml;
+            document.getElementById('journeyOverlay').classList.add('show');
+        }
+
+        function getStepHint(stepKey) {
+            const hints = {
+                application: 'Click to view full application details',
+                shortlisted: 'HR screening completed',
+                invite: 'Interview invitation stage',
+                assessment: 'Click to view assessment details',
+                hrApproval: 'HR approval stage',
+                cooApproval: 'COO approval stage',
+                notified: 'Candidate selection notification',
+                requestDocs: 'Click to open requested documents details',
+                docsReceived: 'Click to view received documents',
+                visaRequest: 'Click to open visa process modal',
+                visaIssued: 'Click to open visa process modal',
+                employeeId: 'Click to view employee ID and start date',
+                onboarded: 'Click to confirm onboarding once all steps are complete'
+            };
+            return hints[stepKey] || '';
+        }
+
+        function handleStepClick(candidateKey, stepKey, isBlocked) {
+            if (isBlocked) {
+                openSimpleModal(
+                    'Onboarding Not Ready',
+                    'This action is available only after all previous steps are completed.',
+                    `<div class="list-box"><h3>Pending Before Onboarding</h3><ul><li>Complete employee ID generation and joining preparation.</li><li>Ensure visa and documentation steps are marked complete.</li></ul></div>`
+                );
+                return;
+            }
+
+            if (stepKey === 'application') return openApplicationDetails(candidateKey);
+            if (stepKey === 'assessment') return openAssessmentDetails(candidateKey);
+            if (stepKey === 'requestDocs' || stepKey === 'docsReceived') return openDocsModal(candidateKey, stepKey);
+            if (stepKey === 'visaRequest' || stepKey === 'visaIssued') return openVisaModal(candidateKey, stepKey);
+            if (stepKey === 'employeeId') return openEmployeeModal(candidateKey);
+            if (stepKey === 'onboarded') return openOnboardModal(candidateKey);
+
+            openSimpleModal(
+                stepLabels[stepKey],
+                candidates[candidateKey].name + ' - ' + candidates[candidateKey].job,
+                `<div class="list-box"><h3>Stage Information</h3><ul><li>This stage is visible in the journey for HR tracking.</li><li>Current overall status: ${candidates[candidateKey].status}</li></ul></div>`
+            );
+        }
+
+        function openApplicationDetails(candidateKey) {
+            const c = candidates[candidateKey];
+            openSimpleModal(
+                'Application Details',
+                c.name + ' - ' + c.job,
+                `
+                <div class="info-grid">
+                    <div class="info-box"><span class="label">Candidate Name</span><span class="value">${c.name}</span></div>
+                    <div class="info-box"><span class="label">Applied Job</span><span class="value">${c.job}</span></div>
+                    <div class="info-box"><span class="label">Department</span><span class="value">${c.department}</span></div>
+                    <div class="info-box"><span class="label">Organisation</span><span class="value">${c.organisation}</span></div>
+                    <div class="info-box"><span class="label">Application Date</span><span class="value">${c.applicationDate}</span></div>
+                    <div class="info-box"><span class="label">Work Mode</span><span class="value">${c.workMode}</span></div>
+                    <div class="info-box"><span class="label">Work Location</span><span class="value">${c.workLocation}</span></div>
+                    <div class="info-box"><span class="label">Current Status</span><span class="value">${c.status}</span></div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('detailOverlay')">Close</button>
+                </div>
+                `
+            );
+        }
+
+        function openAssessmentDetails(candidateKey) {
+            const c = candidates[candidateKey];
+            openSimpleModal(
+                'Interview Assessment',
+                c.name + ' - ' + c.job,
+                `
+                <div class="info-grid">
+                    <div class="info-box"><span class="label">Interviewer</span><span class="value">${c.assessment.interviewer}</span></div>
+                    <div class="info-box"><span class="label">Interview Date</span><span class="value">${c.assessment.date}</span></div>
+                    <div class="info-box"><span class="label">Score</span><span class="value">${c.assessment.score}</span></div>
+                    <div class="info-box"><span class="label">Result</span><span class="value">${c.assessment.result}</span></div>
+                </div>
+                <div class="list-box" style="margin-top:12px;">
+                    <h3>Assessment Notes</h3>
+                    <p style="font-size:14px; color: var(--text-main);">${c.assessment.notes}</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('detailOverlay')">Close</button>
+                </div>
+                `
+            );
+        }
+
+        function openDocsModal(candidateKey, stepKey) {
+            const c = candidates[candidateKey];
+            const isReceived = stepKey === 'docsReceived';
+            const title = isReceived ? 'Documents Received' : 'Requested Documents';
+            const subtitle = c.name + ' - ' + c.job;
+            const items = isReceived ? c.docs.receivedItems : c.docs.requestedItems;
+            const dateLabel = isReceived ? 'Received On' : 'Requested On';
+            const dateValue = isReceived ? c.docs.receivedOn : c.docs.requestedOn;
+            const list = items.length ? items.map(item => `<li>${item}</li>`).join('') : '<li>No documents available yet.</li>';
+
+            openSimpleModal(
+                title,
+                subtitle,
+                `
+                <div class="two-col">
+                    <div class="info-box">
+                        <span class="label">${dateLabel}</span>
+                        <span class="value">${dateValue}</span>
+                    </div>
+                    <div class="info-box">
+                        <span class="label">Candidate</span>
+                        <span class="value">${c.name}</span>
+                    </div>
+                </div>
+                <div class="list-box" style="margin-top:12px;">
+                    <h3>${title} List</h3>
+                    <ul>${list}</ul>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('detailOverlay')">Close</button>
+                </div>
+                `
+            );
+        }
+
+        function openVisaModal(candidateKey, stepKey) {
+            const c = candidates[candidateKey];
+            const title = stepKey === 'visaIssued' ? 'Visa Issued Details' : 'Visa Request Details';
+            openSimpleModal(
+                title,
+                c.name + ' - ' + c.job,
+                `
+                <div class="info-grid">
+                    <div class="info-box"><span class="label">Request Sent Date</span><span class="value">${c.visa.requestDate}</span></div>
+                    <div class="info-box"><span class="label">MOFA Reference</span><span class="value">${c.visa.mofaReference}</span></div>
+                    <div class="info-box"><span class="label">Current Visa Stage</span><span class="value">${c.visa.currentStage}</span></div>
+                    <div class="info-box"><span class="label">Issue Date</span><span class="value">${c.visa.issueDate}</span></div>
+                </div>
+                <div class="list-box" style="margin-top:12px;">
+                    <h3>Visa Notes</h3>
+                    <p style="font-size:14px;">${c.visa.notes}</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('detailOverlay')">Close</button>
+                </div>
+                `
+            );
+        }
+
+        function openEmployeeModal(candidateKey) {
+            const c = candidates[candidateKey];
+            openSimpleModal(
+                'Employee ID and Start Date',
+                c.name + ' - ' + c.job,
+                `
+                <div class="info-grid">
+                    <div class="info-box"><span class="label">Employee ID</span><span class="value">${c.employeeId.employeeId}</span></div>
+                    <div class="info-box"><span class="label">Start Date</span><span class="value">${c.employeeId.startDate}</span></div>
+                    <div class="info-box"><span class="label">Department</span><span class="value">${c.employeeId.department}</span></div>
+                    <div class="info-box"><span class="label">Reporting To</span><span class="value">${c.employeeId.reportingTo}</span></div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('detailOverlay')">Close</button>
+                </div>
+                `
+            );
+        }
+
+        function openOnboardModal(candidateKey) {
+            const c = candidates[candidateKey];
+            openSimpleModal(
+                'Confirm Onboarding',
+                c.name + ' - ' + c.job,
+                `
+                <div class="list-box">
+                    <h3>Are you sure you want to onboard this employee?</h3>
+                    <ul>
+                        <li>Candidate: ${c.name}</li>
+                        <li>Role: ${c.job}</li>
+                        <li>Employee ID: ${c.employeeId.employeeId}</li>
+                        <li>Start Date: ${c.employeeId.startDate}</li>
+                    </ul>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal('detailOverlay')">Cancel</button>
+                    <button class="btn btn-primary" onclick="confirmOnboard('${candidateKey}')">Yes, Onboard Employee</button>
+                </div>
+                `
+            );
+        }
+
+        function confirmOnboard(candidateKey) {
+            const c = candidates[candidateKey];
+            openSimpleModal(
+                'Employee Onboarded',
+                c.name + ' - ' + c.job,
+                `
+                <div class="list-box">
+                    <h3>Confirmation</h3>
+                    <p style="font-size:14px;">The employee has been confirmed for onboarding in this demo flow. You can later connect this to the real workflow if needed.</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('detailOverlay')">Close</button>
+                </div>
+                `
+            );
+        }
+
+        function openComment(candidateKey, type) {
+            document.querySelectorAll('.comments-menu').forEach(menu => menu.classList.remove('open'));
+            const c = candidates[candidateKey];
+            const titles = {
+                hr: 'HR Comments',
+                interview: 'Interview Comments',
+                manager: 'Manager Comments',
+                coo: 'COO Comments'
+            };
+            openSimpleModal(
+                titles[type],
+                c.name + ' - ' + c.job,
+                `
+                <div class="list-box">
+                    <h3>${titles[type]}</h3>
+                    <p style="font-size:14px; color: var(--text-main);">${c.comments[type]}</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('detailOverlay')">Close</button>
+                </div>
+                `
+            );
+        }
+
+        function openSimpleModal(title, subtitle, bodyHtml) {
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailSubtitle').textContent = subtitle;
+            document.getElementById('detailBody').innerHTML = bodyHtml;
+            document.getElementById('detailOverlay').classList.add('show');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function (event) {
+                if (event.target === overlay) overlay.classList.remove('show');
+            });
+        });
+    </script>
 </body>
 </html>
