@@ -1,0 +1,972 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COO Approval Screen</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 22px 55px rgba(15, 23, 42, 0.16);
+            --success: #16a34a;
+            --danger: #dc2626;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 36px;
+            background: #cbd5e1;
+            color: var(--text);
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+        }
+        .screen {
+            max-width: 1440px;
+            margin: 0 auto;
+            background: var(--bg);
+            border: 12px solid #334155;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 65px rgba(15, 23, 42, 0.24);
+        }
+        .topbar {
+            background: #fff;
+            padding: 24px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+        .topbar h1 {
+            margin: 0 0 6px;
+            font-size: 30px;
+            font-weight: 800;
+        }
+        .topbar p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+        .content { padding: 28px 30px 24px; }
+        .filters, .table-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+        }
+        .filters { padding: 20px; margin-bottom: 18px; }
+        .search-row, .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .search-row { margin-bottom: 14px; }
+        .input, .select {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+            color: var(--text);
+            outline: none;
+        }
+        .input {
+            flex: 1 1 360px;
+            min-width: 240px;
+            padding: 12px 14px;
+            font-size: 14px;
+        }
+        .select {
+            min-width: 175px;
+            padding: 11px 12px;
+            font-size: 14px;
+        }
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-outline { background: #fff; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { background: #f8fafc; }
+        .link-clear {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .summary {
+            padding: 0 4px 14px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .table-scroll { overflow-x: auto; }
+        table {
+            width: 100%;
+            min-width: 1240px;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: left;
+            padding: 15px 16px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        tbody tr:hover { background: #f8fafc; }
+        tbody tr:last-child td { border-bottom: none; }
+        .candidate-name { font-weight: 800; }
+        .subline {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+        .comments-wrap, .action-wrap { position: relative; display: inline-block; }
+        .small-btn {
+            background: #fff;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 240px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 8px;
+            display: none;
+            z-index: 40;
+        }
+        .dropdown-menu.open { display: block; }
+        .dropdown-menu button {
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: transparent;
+            padding: 10px 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text);
+            cursor: pointer;
+        }
+        .dropdown-menu button:hover { background: #f8fafc; }
+        .footer {
+            background: #fff;
+            padding: 18px 30px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .page-info { color: var(--muted); font-size: 14px; }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.58);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 26px;
+            z-index: 2000;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            width: min(1180px, 100%);
+            max-height: 92vh;
+            overflow: auto;
+            background: #fff;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            box-shadow: 0 35px 75px rgba(15, 23, 42, 0.3);
+        }
+        .modal.small { width: min(720px, 100%); }
+        .modal.medium { width: min(900px, 100%); }
+        .modal-header {
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+        }
+        .modal-header h2 {
+            margin: 0 0 4px;
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .modal-header p { margin: 0; color: var(--muted); font-size: 13px; }
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: var(--primary);
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: 800;
+        }
+        .modal-body { padding: 22px 24px 24px; }
+        .dark-summary {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #fff;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(110px, 1fr));
+            gap: 14px;
+        }
+        .summary-grid .label {
+            display: block;
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: .05em;
+            margin-bottom: 4px;
+        }
+        .summary-grid .value { font-size: 15px; font-weight: 800; }
+        .remark-line {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(148, 163, 184, 0.25);
+            font-size: 14px;
+            color: #e2e8f0;
+            font-style: italic;
+        }
+        .panel {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #fff;
+            padding: 16px;
+        }
+        .panel h3 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        .detail-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 13px 14px;
+            background: #fff;
+        }
+        .detail-item .label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+        .detail-item .value { font-size: 14px; font-weight: 800; }
+        .cv-section { margin-bottom: 16px; }
+        .cv-section h4 {
+            margin: 0 0 6px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: var(--muted);
+        }
+        .cv-section p, .cv-section li {
+            font-size: 14px;
+            margin: 0 0 6px;
+            color: var(--text);
+        }
+        .cv-section ul { margin: 0; padding-left: 18px; }
+        .textarea, .field-select {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 12px;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+            color: var(--text);
+            font-family: inherit;
+        }
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .radio-wrap {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 12px 0 16px;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .info-box {
+            border: 1px solid #bfdbfe;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .modal-actions {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .pill-green { background: #dcfce7; color: var(--success); }
+        .pill-red { background: #fee2e2; color: var(--danger); }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .screen { border: none; box-shadow: none; max-width: 100%; }
+            .filters .btn, .filters .link-clear, .comments-wrap, .action-wrap, .modal-overlay, .footer button { display: none !important; }
+            .table-scroll { overflow: visible; }
+            table { min-width: 100%; }
+        }
+        @media (max-width: 980px) {
+            .summary-grid, .detail-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="screen">
+        <header class="topbar">
+            <h1>COO Approval Screen</h1>
+            <p>Review final shortlisted MEP candidates, read HR and department comments, and record the COO decision with approval remarks.</p>
+        </header>
+
+        <main class="content">
+            <section class="filters">
+                <div class="search-row">
+                    <input class="input" type="text" placeholder="Search candidate name / applied job / department">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+                <div class="filter-row">
+                    <select class="select">
+                        <option selected>Applied Job</option>
+                        <option>BIM Coordinator</option>
+                        <option>QAQC Engineer</option>
+                        <option>Planning Engineer</option>
+                        <option>MEP Design Engineer</option>
+                    </select>
+                    <select class="select">
+                        <option selected>Department</option>
+                        <option>Engineering</option>
+                        <option>QAQC</option>
+                        <option>Planning</option>
+                    </select>
+                    <select class="select">
+                        <option selected>Organisation</option>
+                        <option>Menasco</option>
+                        <option>Macs</option>
+                    </select>
+                    <select class="select">
+                        <option selected>Status</option>
+                        <option>Pending</option>
+                        <option>Approved</option>
+                        <option>Disapproved</option>
+                    </select>
+                    <a class="link-clear" href="#">Clear Filters</a>
+                </div>
+            </section>
+
+            <div class="summary">Showing 4 candidates pending or ready for COO review</div>
+
+            <section class="table-card">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Candidate Name</th>
+                                <th>Applied Job</th>
+                                <th>Department</th>
+                                <th>Organisation</th>
+                                <th>Status</th>
+                                <th>Comments</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td><span class="candidate-name">Mohammed Khan</span><span class="subline">mohammed.khan@email.com</span></td>
+                                <td>BIM Coordinator</td>
+                                <td>Engineering</td>
+                                <td>Menasco</td>
+                                <td>
+                                    <select class="select" style="min-width:140px; padding:9px 10px; font-size:13px;">
+                                        <option>Pending</option>
+                                        <option selected>Approved</option>
+                                        <option>Disapproved</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="comments-wrap">
+                                        <button class="small-btn" onclick="toggleDropdown(event, 'comments-1')">Comments ▼</button>
+                                        <div class="dropdown-menu" id="comments-1">
+                                            <button onclick="openCommentModal('mohammed', 'hr')">1 - HR Comments</button>
+                                            <button onclick="openCommentModal('mohammed', 'dept')">2 - Department Manager Comment</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-wrap">
+                                        <button class="small-btn" onclick="toggleDropdown(event, 'actions-1')">Actions ▼</button>
+                                        <div class="dropdown-menu" id="actions-1">
+                                            <button onclick="openApplicationModal('mohammed')">1 - Job Application</button>
+                                            <button onclick="openCvModal('mohammed')">2 - CV</button>
+                                            <button onclick="openAssessmentModal('mohammed')">3 - Interview Assessment</button>
+                                            <button onclick="openDecisionModal('mohammed', 'approve')">4 - Make Decision</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="candidate-name">Ayesha Rahman</span><span class="subline">ayesha.rahman@email.com</span></td>
+                                <td>MEP Design Engineer</td>
+                                <td>Engineering</td>
+                                <td>Menasco</td>
+                                <td>
+                                    <select class="select" style="min-width:140px; padding:9px 10px; font-size:13px;">
+                                        <option selected>Pending</option>
+                                        <option>Approved</option>
+                                        <option>Disapproved</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="comments-wrap">
+                                        <button class="small-btn" onclick="toggleDropdown(event, 'comments-2')">Comments ▼</button>
+                                        <div class="dropdown-menu" id="comments-2">
+                                            <button onclick="openCommentModal('ayesha', 'hr')">1 - HR Comments</button>
+                                            <button onclick="openCommentModal('ayesha', 'dept')">2 - Department Manager Comment</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-wrap">
+                                        <button class="small-btn" onclick="toggleDropdown(event, 'actions-2')">Actions ▼</button>
+                                        <div class="dropdown-menu" id="actions-2">
+                                            <button onclick="openApplicationModal('ayesha')">1 - Job Application</button>
+                                            <button onclick="openCvModal('ayesha')">2 - CV</button>
+                                            <button onclick="openAssessmentModal('ayesha')">3 - Interview Assessment</button>
+                                            <button onclick="openDecisionModal('ayesha', 'approve')">4 - Make Decision</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="candidate-name">Faisal Ahmed</span><span class="subline">faisal.ahmed@email.com</span></td>
+                                <td>Planning Engineer</td>
+                                <td>Planning</td>
+                                <td>Menasco</td>
+                                <td>
+                                    <select class="select" style="min-width:140px; padding:9px 10px; font-size:13px;">
+                                        <option selected>Pending</option>
+                                        <option>Approved</option>
+                                        <option>Disapproved</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="comments-wrap">
+                                        <button class="small-btn" onclick="toggleDropdown(event, 'comments-3')">Comments ▼</button>
+                                        <div class="dropdown-menu" id="comments-3">
+                                            <button onclick="openCommentModal('faisal', 'hr')">1 - HR Comments</button>
+                                            <button onclick="openCommentModal('faisal', 'dept')">2 - Department Manager Comment</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-wrap">
+                                        <button class="small-btn" onclick="toggleDropdown(event, 'actions-3')">Actions ▼</button>
+                                        <div class="dropdown-menu" id="actions-3">
+                                            <button onclick="openApplicationModal('faisal')">1 - Job Application</button>
+                                            <button onclick="openCvModal('faisal')">2 - CV</button>
+                                            <button onclick="openAssessmentModal('faisal')">3 - Interview Assessment</button>
+                                            <button onclick="openDecisionModal('faisal', 'approve')">4 - Make Decision</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="candidate-name">Omar Joseph</span><span class="subline">omar.joseph@email.com</span></td>
+                                <td>QAQC Engineer</td>
+                                <td>QAQC</td>
+                                <td>Macs</td>
+                                <td>
+                                    <select class="select" style="min-width:140px; padding:9px 10px; font-size:13px;">
+                                        <option>Pending</option>
+                                        <option>Approved</option>
+                                        <option selected>Disapproved</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="comments-wrap">
+                                        <button class="small-btn" onclick="toggleDropdown(event, 'comments-4')">Comments ▼</button>
+                                        <div class="dropdown-menu" id="comments-4">
+                                            <button onclick="openCommentModal('omar', 'hr')">1 - HR Comments</button>
+                                            <button onclick="openCommentModal('omar', 'dept')">2 - Department Manager Comment</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="action-wrap">
+                                        <button class="small-btn" onclick="toggleDropdown(event, 'actions-4')">Actions ▼</button>
+                                        <div class="dropdown-menu" id="actions-4">
+                                            <button onclick="openApplicationModal('omar')">1 - Job Application</button>
+                                            <button onclick="openCvModal('omar')">2 - CV</button>
+                                            <button onclick="openAssessmentModal('omar')">3 - Interview Assessment</button>
+                                            <button onclick="openDecisionModal('omar', 'approve')">4 - Make Decision</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <button class="btn btn-outline">Previous</button>
+            <span class="page-info">Page 1 of 1</span>
+            <button class="btn btn-outline">Next</button>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="applicationOverlay">
+        <div class="modal medium">
+            <div class="modal-header">
+                <div>
+                    <h2>Job Application</h2>
+                    <p id="applicationSubtitle">Candidate application details</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('applicationOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="dark-summary" id="applicationSummary"></div>
+                <div class="detail-grid" id="applicationGrid"></div>
+                <div class="panel" style="margin-top:14px;">
+                    <h3>Application Summary</h3>
+                    <p id="applicationText" style="margin:0; font-size:14px; line-height:1.7;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="cvOverlay">
+        <div class="modal medium">
+            <div class="modal-header">
+                <div>
+                    <h2>CV</h2>
+                    <p id="cvSubtitle">Candidate CV review</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('cvOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="dark-summary" id="cvSummary"></div>
+                <div class="panel" id="cvPanel"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="assessmentOverlay">
+        <div class="modal medium">
+            <div class="modal-header">
+                <div>
+                    <h2>Interview Assessment</h2>
+                    <p id="assessmentSubtitle">Department interview evaluation</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('assessmentOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="dark-summary" id="assessmentSummary"></div>
+                <div class="detail-grid" id="assessmentGrid"></div>
+                <div class="panel" style="margin-top:14px;">
+                    <h3>Assessment Remarks</h3>
+                    <p id="assessmentText" style="margin:0; font-size:14px; line-height:1.7;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="commentOverlay">
+        <div class="modal small">
+            <div class="modal-header">
+                <div>
+                    <h2 id="commentTitle">Comments</h2>
+                    <p id="commentSubtitle">Comment details</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('commentOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="dark-summary" id="commentSummary"></div>
+                <div class="panel">
+                    <h3 id="commentPanelTitle">Comment</h3>
+                    <p id="commentText" style="margin:0; font-size:14px; line-height:1.7;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="decisionOverlay">
+        <div class="modal small">
+            <div class="modal-header">
+                <div>
+                    <h2 id="decisionTitle">COO Decision</h2>
+                    <p id="decisionSubtitle">Record final decision</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('decisionOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="dark-summary" id="decisionSummary"></div>
+
+                <div class="info-box">
+                    Add your COO comment below and choose whether this candidate is approved or rejected for the next step.
+                </div>
+
+                <div class="radio-wrap">
+                    <label class="radio-item"><input type="radio" name="cooDecision" id="decisionApprove"> Approve</label>
+                    <label class="radio-item"><input type="radio" name="cooDecision" id="decisionReject"> Reject</label>
+                </div>
+
+                <label style="display:block; margin-bottom:6px; font-size:13px; font-weight:700;">COO Comment</label>
+                <textarea class="textarea" id="decisionComment">Candidate reviewed. Please proceed with the next hiring step based on this COO decision.</textarea>
+
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal('decisionOverlay')">Cancel</button>
+                    <button class="btn btn-primary" onclick="saveDecision()">Save COO Decision</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="successOverlay">
+        <div class="modal small">
+            <div class="modal-header">
+                <div>
+                    <h2 id="successTitle">Saved</h2>
+                    <p>COO action completed</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('successOverlay')">×</button>
+            </div>
+            <div class="modal-body" id="successBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const candidates = {
+            mohammed: {
+                name: "Mohammed Khan",
+                job: "BIM Coordinator",
+                department: "Engineering",
+                organisation: "Menasco",
+                hrComment: "Profile matches the BIM Coordinator role well. Candidate has strong MEP coordination experience, UAE availability, and documents are complete.",
+                deptComment: "Engineering Department recommends this candidate. Strong Revit MEP and Navisworks command, good communication, and fit for model coordination work.",
+                email: "mohammed.khan@email.com",
+                phone: "+971 50 123 4567",
+                nationality: "Indian",
+                experience: "5 Years",
+                workMode: "Onsite",
+                currentLocation: "UAE",
+                employmentType: "Permanent",
+                education: "B.Tech Mechanical Engineering",
+                currentRole: "BIM Modeler - MEP",
+                applicationSummary: "Experienced BIM Coordinator with strong MEP coordination background across design and execution stages, including clash detection, model management, and shop drawing support.",
+                cvSkills: ["Revit MEP", "Navisworks", "AutoCAD", "BIM 360", "Clash Detection", "Shop Drawings"],
+                cvExperience: [
+                    "Coordinated MEP BIM models for commercial and residential projects",
+                    "Led clash detection reviews and issued model coordination updates",
+                    "Supported engineering and site teams with model-based issue tracking"
+                ],
+                assessment: {
+                    interviewer: "Engineering Manager",
+                    date: "03 Apr 2026",
+                    result: "Recommended",
+                    score: "8.5 / 10",
+                    remarks: "Strong BIM coordination profile. Candidate demonstrated good technical understanding and coordination workflow awareness."
+                }
+            },
+            ayesha: {
+                name: "Ayesha Rahman",
+                job: "MEP Design Engineer",
+                department: "Engineering",
+                organisation: "Menasco",
+                hrComment: "Candidate shortlisted after HR screening. Suitable for technical review and available within notice period.",
+                deptComment: "Department manager recommends approval. Candidate has solid HVAC and electrical design coordination background and answered well in interview.",
+                email: "ayesha.rahman@email.com",
+                phone: "+971 55 245 8901",
+                nationality: "Pakistani",
+                experience: "6 Years",
+                workMode: "Onsite",
+                currentLocation: "UAE",
+                employmentType: "Contract",
+                education: "B.E Electrical Engineering",
+                currentRole: "MEP Design Engineer",
+                applicationSummary: "MEP Design Engineer with experience in HVAC, electrical coordination, design review, technical submissions, and project support for commercial developments.",
+                cvSkills: ["HVAC Design", "Load Calculation", "Electrical Coordination", "AutoCAD", "Revit MEP", "Material Submittals"],
+                cvExperience: [
+                    "Prepared MEP design packages and supported design coordination meetings",
+                    "Reviewed HVAC and electrical layouts for compliance and execution readiness",
+                    "Worked with planning and site teams during design-to-execution handover"
+                ],
+                assessment: {
+                    interviewer: "Eng. Faisal Noor",
+                    date: "04 Apr 2026",
+                    result: "Recommended",
+                    score: "8 / 10",
+                    remarks: "Good design and coordination knowledge. Suitable for department requirement."
+                }
+            },
+            faisal: {
+                name: "Faisal Ahmed",
+                job: "Planning Engineer",
+                department: "Planning",
+                organisation: "Menasco",
+                hrComment: "Candidate sent for final management decision after interview recommendation and documentation review.",
+                deptComment: "Planning head recommends approval. Candidate is strong in scheduling, project progress reporting, and cross-team coordination.",
+                email: "faisal.ahmed@email.com",
+                phone: "+971 54 710 2255",
+                nationality: "Egyptian",
+                experience: "7 Years",
+                workMode: "Onsite",
+                currentLocation: "KSA",
+                employmentType: "Permanent",
+                education: "B.Sc Civil Engineering",
+                currentRole: "Planning Engineer",
+                applicationSummary: "Planning Engineer with experience in MEP project scheduling, reporting, milestone tracking, and engineering/procurement coordination.",
+                cvSkills: ["Primavera P6", "Progress Reporting", "Schedule Recovery", "Resource Planning", "Project Controls"],
+                cvExperience: [
+                    "Prepared baseline and recovery schedules for MEP projects",
+                    "Tracked engineering, procurement, and site progress against milestones",
+                    "Supported management reporting and delay analysis"
+                ],
+                assessment: {
+                    interviewer: "Planning Manager",
+                    date: "02 Apr 2026",
+                    result: "Recommended",
+                    score: "8.2 / 10",
+                    remarks: "Strong project planning and reporting skills. Recommended for next approval stage."
+                }
+            },
+            omar: {
+                name: "Omar Joseph",
+                job: "QAQC Engineer",
+                department: "QAQC",
+                organisation: "Macs",
+                hrComment: "Candidate progressed to COO view after QAQC team submitted evaluation.",
+                deptComment: "Department manager does not recommend approval. Candidate has some site experience, but interview performance did not meet department expectations.",
+                email: "omar.joseph@email.com",
+                phone: "+971 56 482 1144",
+                nationality: "Jordanian",
+                experience: "7 Years",
+                workMode: "Onsite",
+                currentLocation: "UAE",
+                employmentType: "Consultant",
+                education: "B.Sc Mechanical Engineering",
+                currentRole: "QAQC / Site Engineer",
+                applicationSummary: "Candidate with QAQC and site execution exposure in MEP projects, including inspections, documentation, and subcontractor coordination.",
+                cvSkills: ["Inspections", "QAQC Records", "Material Approvals", "Site Coordination", "Documentation"],
+                cvExperience: [
+                    "Handled inspection documentation and QAQC follow-up",
+                    "Supported site coordination and subcontractor tracking",
+                    "Prepared quality records and material compliance documents"
+                ],
+                assessment: {
+                    interviewer: "QAQC Manager",
+                    date: "03 Apr 2026",
+                    result: "Rejected",
+                    score: "5.5 / 10",
+                    remarks: "Candidate did not match the current QAQC requirement in technical depth and documentation clarity."
+                }
+            }
+        };
+
+        let currentDecisionCandidate = null;
+
+        function toggleDropdown(event, id) {
+            event.stopPropagation();
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                if (menu.id !== id) menu.classList.remove('open');
+            });
+            document.getElementById(id).classList.toggle('open');
+        }
+
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => menu.classList.remove('open'));
+        });
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.classList.remove('show');
+            });
+        });
+
+        function summaryCard(c) {
+            return `
+                <div class="summary-grid">
+                    <div><span class="label">Candidate Name</span><div class="value">${c.name}</div></div>
+                    <div><span class="label">Applied Job</span><div class="value">${c.job}</div></div>
+                    <div><span class="label">Department</span><div class="value">${c.department}</div></div>
+                    <div><span class="label">Organisation</span><div class="value">${c.organisation}</div></div>
+                    <div><span class="label">Current Location</span><div class="value">${c.currentLocation}</div></div>
+                </div>
+                <div class="remark-line">"Final management review in progress for this MEP candidate."</div>
+            `;
+        }
+
+        function openApplicationModal(key) {
+            const c = candidates[key];
+            document.getElementById('applicationSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('applicationSummary').innerHTML = summaryCard(c);
+            document.getElementById('applicationGrid').innerHTML = `
+                <div class="detail-item"><span class="label">Candidate Name</span><div class="value">${c.name}</div></div>
+                <div class="detail-item"><span class="label">Applied Job</span><div class="value">${c.job}</div></div>
+                <div class="detail-item"><span class="label">Department</span><div class="value">${c.department}</div></div>
+                <div class="detail-item"><span class="label">Organisation</span><div class="value">${c.organisation}</div></div>
+                <div class="detail-item"><span class="label">Employment Type</span><div class="value">${c.employmentType}</div></div>
+                <div class="detail-item"><span class="label">Work Mode</span><div class="value">${c.workMode}</div></div>
+                <div class="detail-item"><span class="label">Experience</span><div class="value">${c.experience}</div></div>
+                <div class="detail-item"><span class="label">Education</span><div class="value">${c.education}</div></div>
+                <div class="detail-item"><span class="label">Current Role</span><div class="value">${c.currentRole}</div></div>
+                <div class="detail-item"><span class="label">Nationality</span><div class="value">${c.nationality}</div></div>
+            `;
+            document.getElementById('applicationText').textContent = c.applicationSummary;
+            document.getElementById('applicationOverlay').classList.add('show');
+        }
+
+        function openCvModal(key) {
+            const c = candidates[key];
+            document.getElementById('cvSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('cvSummary').innerHTML = summaryCard(c);
+            document.getElementById('cvPanel').innerHTML = `
+                <h3>CV Snapshot</h3>
+                <div class="cv-section">
+                    <h4>${c.name}</h4>
+                    <p>${c.currentRole}</p>
+                    <p>${c.email} | ${c.phone}</p>
+                </div>
+                <div class="cv-section">
+                    <h4>Core Skills</h4>
+                    <ul>${c.cvSkills.map(skill => `<li>${skill}</li>`).join('')}</ul>
+                </div>
+                <div class="cv-section">
+                    <h4>Key Experience</h4>
+                    <ul>${c.cvExperience.map(item => `<li>${item}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('cvOverlay').classList.add('show');
+        }
+
+        function openAssessmentModal(key) {
+            const c = candidates[key];
+            document.getElementById('assessmentSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('assessmentSummary').innerHTML = summaryCard(c);
+            document.getElementById('assessmentGrid').innerHTML = `
+                <div class="detail-item"><span class="label">Interviewer</span><div class="value">${c.assessment.interviewer}</div></div>
+                <div class="detail-item"><span class="label">Interview Date</span><div class="value">${c.assessment.date}</div></div>
+                <div class="detail-item"><span class="label">Result</span><div class="value">${c.assessment.result === 'Recommended' ? '<span class="pill pill-green">Recommended</span>' : '<span class="pill pill-red">Rejected</span>'}</div></div>
+                <div class="detail-item"><span class="label">Score</span><div class="value">${c.assessment.score}</div></div>
+            `;
+            document.getElementById('assessmentText').textContent = c.assessment.remarks;
+            document.getElementById('assessmentOverlay').classList.add('show');
+        }
+
+        function openCommentModal(key, type) {
+            const c = candidates[key];
+            const isHr = type === 'hr';
+            document.getElementById('commentTitle').textContent = isHr ? 'HR Comments' : 'Department Manager Comment';
+            document.getElementById('commentSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('commentSummary').innerHTML = summaryCard(c);
+            document.getElementById('commentPanelTitle').textContent = isHr ? 'HR Comments' : 'Department Manager Comment';
+            document.getElementById('commentText').textContent = isHr ? c.hrComment : c.deptComment;
+            document.getElementById('commentOverlay').classList.add('show');
+        }
+
+        function openDecisionModal(key, mode) {
+            const c = candidates[key];
+            currentDecisionCandidate = c;
+            document.getElementById('decisionTitle').textContent = mode === 'approve' ? 'COO Approval' : 'COO Disapproval';
+            document.getElementById('decisionSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('decisionSummary').innerHTML = summaryCard(c);
+            document.getElementById('decisionApprove').checked = mode === 'approve';
+            document.getElementById('decisionReject').checked = mode === 'disapprove';
+            document.getElementById('decisionComment').value = mode === 'approve'
+                ? 'Candidate reviewed and approved by COO. Please proceed with the next HR and onboarding steps.'
+                : 'Candidate reviewed by COO. Please hold further processing and update the hiring record accordingly.';
+            document.getElementById('decisionOverlay').classList.add('show');
+        }
+
+        function saveDecision() {
+            const decision = document.getElementById('decisionApprove').checked ? 'Approved' : 'Disapproved';
+            const comment = document.getElementById('decisionComment').value;
+            closeModal('decisionOverlay');
+
+            document.getElementById('successTitle').textContent = 'COO Decision Saved';
+            document.getElementById('successBody').innerHTML = `
+                <div class="panel">
+                    <h3>${decision}</h3>
+                    <p style="font-size:14px; line-height:1.7; margin:0 0 12px;">${currentDecisionCandidate ? currentDecisionCandidate.name : 'Candidate'} has been marked as <strong>${decision}</strong>.</p>
+                    <p style="font-size:14px; line-height:1.7; margin:0;"><strong>COO Comment:</strong> ${comment}</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('successOverlay')">Close</button>
+                </div>
+            `;
+            document.getElementById('successOverlay').classList.add('show');
+        }
+    </script>
+</body>
+</html>
