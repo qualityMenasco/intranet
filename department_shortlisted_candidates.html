@@ -3,180 +3,1069 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shortlisted Candidates - Wireframe Mockup</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Engineering Department - Candidate Review</title>
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --surface: #f1f5f9;
+            --shadow: 0 20px 45px rgba(15, 23, 42, 0.14);
+        }
+        * { box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            padding: 40px;
-            color: #111827;
+            margin: 0;
+            padding: 36px;
+            background: #cbd5e1;
+            color: var(--text);
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
         }
-        .browser-screen {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
-            border: 1px solid #e5e7eb;
-            max-width: 1200px;
+        .screen {
+            max-width: 1440px;
             margin: 0 auto;
+            background: var(--bg);
+            border: 12px solid #334155;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 28px 60px rgba(15, 23, 42, 0.24);
         }
-        .browser-header {
-            background: #f9fafb;
-            padding: 12px 20px;
-            border-bottom: 1px solid #e5e7eb;
+        .topbar {
+            background: #fff;
+            padding: 24px 30px;
+            border-bottom: 1px solid var(--border);
+        }
+        .topbar h1 {
+            margin: 0 0 6px;
+            font-size: 30px;
+            font-weight: 800;
+        }
+        .topbar p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+        .content { padding: 28px 30px 24px; }
+        .filters, .table-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+        }
+        .filters { padding: 20px; margin-bottom: 18px; }
+        .search-row, .filter-row {
             display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
             align-items: center;
-            gap: 8px;
         }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .dot-red { background: #ff5f56; }
-        .dot-yellow { background: #ffbd2e; }
-        .dot-green { background: #27c93f; }
-        
+        .search-row { margin-bottom: 14px; }
+        .input, .select, .status-select {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+            color: var(--text);
+            outline: none;
+        }
+        .input {
+            flex: 1 1 360px;
+            min-width: 260px;
+            padding: 12px 14px;
+            font-size: 14px;
+        }
+        .select {
+            min-width: 180px;
+            padding: 11px 12px;
+            font-size: 14px;
+        }
+        .status-select {
+            min-width: 220px;
+            padding: 9px 10px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-outline { background: #fff; color: var(--text); border: 1px solid var(--border); }
+        .btn-outline:hover { background: #f8fafc; }
+        .muted-link {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .summary {
+            padding: 0 4px 14px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .table-scroll { overflow-x: auto; }
+        table {
+            width: 100%;
+            min-width: 1400px;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: left;
+            padding: 15px 16px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+        td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        tbody tr:hover { background: #f8fafc; }
+        tbody tr:last-child td { border-bottom: none; }
+        .candidate-name { font-weight: 800; }
+        .subline {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+        .action-wrap { position: relative; display: inline-block; }
+        .action-btn {
+            background: #fff;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 9px 13px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .action-menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 260px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 8px;
+            display: none;
+            z-index: 40;
+        }
+        .action-menu.open { display: block; }
+        .action-menu button {
+            width: 100%;
+            text-align: left;
+            border: none;
+            background: transparent;
+            padding: 10px 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text);
+            cursor: pointer;
+        }
+        .action-menu button:hover { background: #f8fafc; }
+        .footer {
+            background: #fff;
+            padding: 18px 30px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .page-info { color: var(--muted); font-size: 14px; }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.58);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 26px;
+            z-index: 2000;
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            width: min(1240px, 100%);
+            max-height: 92vh;
+            overflow: auto;
+            background: #fff;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            box-shadow: 0 35px 75px rgba(15, 23, 42, 0.3);
+        }
+        .modal.small { width: min(700px, 100%); }
+        .modal.medium { width: min(860px, 100%); }
+        .modal-header {
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+        }
+        .modal-header h2 {
+            margin: 0 0 4px;
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .modal-header p { margin: 0; color: var(--muted); font-size: 13px; }
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: var(--primary);
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: 800;
+        }
+        .modal-body { padding: 22px 24px 24px; }
+        .dark-summary {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #fff;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(120px, 1fr));
+            gap: 14px;
+        }
+        .summary-grid .label {
+            display: block;
+            font-size: 11px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: .05em;
+            margin-bottom: 4px;
+        }
+        .summary-grid .value {
+            font-size: 15px;
+            font-weight: 800;
+        }
+        .manager-remark {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(148, 163, 184, 0.25);
+            font-size: 14px;
+            color: #e2e8f0;
+            font-style: italic;
+        }
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .panel {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #fff;
+            padding: 16px;
+        }
+        .panel h3 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+        .cv-box { min-height: 520px; background: #fcfdff; }
+        .cv-section { margin-bottom: 16px; }
+        .cv-section h4 {
+            margin: 0 0 6px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: var(--muted);
+        }
+        .cv-section p, .cv-section li {
+            font-size: 14px;
+            margin: 0 0 6px;
+            color: var(--text);
+        }
+        .cv-section ul { margin: 0; padding-left: 18px; }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        .detail-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 13px 14px;
+            background: #fff;
+        }
+        .detail-item .label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+        .detail-item .value {
+            font-size: 14px;
+            font-weight: 800;
+        }
+        .textarea, .field-input, .field-select {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 12px;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+            color: var(--text);
+        }
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(180px, 1fr));
+            gap: 14px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .radio-wrap {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 8px 0 6px;
+        }
+        .radio-item {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .note-box {
+            border: 1px solid #bfdbfe;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+        .modal-actions {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
         @media print {
-            body { background: white; padding: 0; }
-            .browser-screen { box-shadow: none; border: none; }
-            .browser-header { display: none; }
-            .no-print { display: none; }
+            body { background: #fff; padding: 0; }
+            .screen { border: none; box-shadow: none; max-width: 100%; }
+            .filters .btn, .filters .muted-link, .action-wrap, .status-select, .modal-overlay, .footer button { display: none !important; }
+            .table-scroll { overflow: visible; }
+            table { min-width: 100%; }
+        }
+        @media (max-width: 980px) {
+            .split-layout, .summary-grid, .detail-grid, .form-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <div class="screen">
+        <header class="topbar">
+            <h1>Engineering Department</h1>
+            <p>Review candidates received from HR, assign interviewers, conduct interviews, and send interview decisions back to HR for the next hiring step.</p>
+        </header>
 
-<div class="browser-screen">
-    <!-- Browser Mockup Header -->
-    <div class="browser-header">
-        <div class="dot dot-red"></div>
-        <div class="dot dot-yellow"></div>
-        <div class="dot dot-green"></div>
-        <div class="ml-4 text-xs text-gray-400 font-mono">https://recruitment.software/candidates/shortlisted</div>
+        <main class="content">
+            <section class="filters">
+                <div class="search-row">
+                    <input class="input" type="text" placeholder="Search candidate name / applied job / interviewer">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+                <div class="filter-row">
+                    <select class="select">
+                        <option selected>Applied Job</option>
+                        <option>BIM Coordinator</option>
+                        <option>MEP Design Engineer</option>
+                        <option>Revit Modeler</option>
+                        <option>Site Engineer - MEP</option>
+                    </select>
+                    <select class="select">
+                        <option selected>Employment Type</option>
+                        <option>Permanent</option>
+                        <option>Contract</option>
+                        <option>Internship</option>
+                        <option>Consultant</option>
+                    </select>
+                    <select class="select">
+                        <option selected>Organisation</option>
+                        <option>Menasco</option>
+                        <option>Macs</option>
+                    </select>
+                    <select class="select">
+                        <option selected>Interviewer</option>
+                        <option>Myself</option>
+                        <option>Eng. Faisal Noor</option>
+                        <option>Eng. Sara Ali</option>
+                        <option>Eng. Omar Khalid</option>
+                        <option>Eng. Mariam Yusuf</option>
+                    </select>
+                    <select class="select">
+                        <option selected>Status</option>
+                        <option>Received from HR</option>
+                        <option>Interviewer Assigned</option>
+                        <option>Interviewed - Recommended</option>
+                        <option>Interviewed - Rejected</option>
+                        <option>Sent to HR - Recommended</option>
+                        <option>Sent to HR - Rejected</option>
+                    </select>
+                    <a class="muted-link" href="#">Clear Filters</a>
+                </div>
+            </section>
+
+            <div class="summary">Showing 4 candidates</div>
+
+            <section class="table-card">
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Candidate Name</th>
+                                <th>Applied Job</th>
+                                <th>Employment Type</th>
+                                <th>Organisation</th>
+                                <th>Work Mode</th>
+                                <th>Interviewer</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td><span class="candidate-name">Mohammed Khan</span><span class="subline">mohammed.khan@email.com</span></td>
+                                <td>BIM Coordinator</td>
+                                <td>Permanent</td>
+                                <td>Menasco</td>
+                                <td>Onsite</td>
+                                <td>Myself</td>
+                                <td>
+                                    <select class="status-select">
+                                        <option>Received from HR</option>
+                                        <option>Interviewer Assigned</option>
+                                        <option selected>Interviewed - Recommended</option>
+                                        <option>Interviewed - Rejected</option>
+                                        <option>Sent to HR - Recommended</option>
+                                        <option>Sent to HR - Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="action-wrap">
+                                        <button class="action-btn" onclick="toggleActionMenu(event, 'menu-1')">Actions ▼</button>
+                                        <div class="action-menu" id="menu-1">
+                                            <button onclick="openApplicationModal('mohammed')">1 - View Application Details</button>
+                                            <button onclick="openAssignModal('mohammed')">2 - Assign Interviewer</button>
+                                            <button onclick="openAssessmentModal('mohammed', 'conduct')">3 - Conduct Interview</button>
+                                            <button onclick="openAssessmentModal('mohammed', 'edit')">4 - View / Edit Assessment</button>
+                                            <button onclick="openSendHrModal('mohammed')">5 - Send to HR</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="candidate-name">Ayesha Rahman</span><span class="subline">ayesha.rahman@email.com</span></td>
+                                <td>MEP Design Engineer</td>
+                                <td>Contract</td>
+                                <td>Menasco</td>
+                                <td>Onsite</td>
+                                <td>Eng. Faisal Noor</td>
+                                <td>
+                                    <select class="status-select">
+                                        <option>Received from HR</option>
+                                        <option selected>Interviewer Assigned</option>
+                                        <option>Interviewed - Recommended</option>
+                                        <option>Interviewed - Rejected</option>
+                                        <option>Sent to HR - Recommended</option>
+                                        <option>Sent to HR - Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="action-wrap">
+                                        <button class="action-btn" onclick="toggleActionMenu(event, 'menu-2')">Actions ▼</button>
+                                        <div class="action-menu" id="menu-2">
+                                            <button onclick="openApplicationModal('ayesha')">1 - View Application Details</button>
+                                            <button onclick="openAssignModal('ayesha')">2 - Assign Interviewer</button>
+                                            <button onclick="openAssessmentModal('ayesha', 'conduct')">3 - Conduct Interview</button>
+                                            <button onclick="openAssessmentModal('ayesha', 'edit')">4 - View / Edit Assessment</button>
+                                            <button onclick="openSendHrModal('ayesha')">5 - Send to HR</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="candidate-name">Bilal Nadeem</span><span class="subline">bilal.nadeem@email.com</span></td>
+                                <td>Revit Modeler</td>
+                                <td>Permanent</td>
+                                <td>Macs</td>
+                                <td>Onsite</td>
+                                <td>Myself</td>
+                                <td>
+                                    <select class="status-select">
+                                        <option selected>Received from HR</option>
+                                        <option>Interviewer Assigned</option>
+                                        <option>Interviewed - Recommended</option>
+                                        <option>Interviewed - Rejected</option>
+                                        <option>Sent to HR - Recommended</option>
+                                        <option>Sent to HR - Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="action-wrap">
+                                        <button class="action-btn" onclick="toggleActionMenu(event, 'menu-3')">Actions ▼</button>
+                                        <div class="action-menu" id="menu-3">
+                                            <button onclick="openApplicationModal('bilal')">1 - View Application Details</button>
+                                            <button onclick="openAssignModal('bilal')">2 - Assign Interviewer</button>
+                                            <button onclick="openAssessmentModal('bilal', 'conduct')">3 - Conduct Interview</button>
+                                            <button onclick="openAssessmentModal('bilal', 'edit')">4 - View / Edit Assessment</button>
+                                            <button onclick="openSendHrModal('bilal')">5 - Send to HR</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="candidate-name">Omar Joseph</span><span class="subline">omar.joseph@email.com</span></td>
+                                <td>Site Engineer - MEP</td>
+                                <td>Consultant</td>
+                                <td>Menasco</td>
+                                <td>Onsite</td>
+                                <td>Eng. Sara Ali</td>
+                                <td>
+                                    <select class="status-select">
+                                        <option>Received from HR</option>
+                                        <option>Interviewer Assigned</option>
+                                        <option>Interviewed - Recommended</option>
+                                        <option selected>Interviewed - Rejected</option>
+                                        <option>Sent to HR - Recommended</option>
+                                        <option>Sent to HR - Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="action-wrap">
+                                        <button class="action-btn" onclick="toggleActionMenu(event, 'menu-4')">Actions ▼</button>
+                                        <div class="action-menu" id="menu-4">
+                                            <button onclick="openApplicationModal('omar')">1 - View Application Details</button>
+                                            <button onclick="openAssignModal('omar')">2 - Assign Interviewer</button>
+                                            <button onclick="openAssessmentModal('omar', 'conduct')">3 - Conduct Interview</button>
+                                            <button onclick="openAssessmentModal('omar', 'edit')">4 - View / Edit Assessment</button>
+                                            <button onclick="openSendHrModal('omar')">5 - Send to HR</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <button class="btn btn-outline">Previous</button>
+            <span class="page-info">Page 1 of 1</span>
+            <button class="btn btn-outline">Next</button>
+        </footer>
     </div>
 
-    <!-- App Content -->
-    <div class="p-8">
-        <!-- Header Section -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">Shortlisted Candidates</h1>
-            <p class="text-gray-500 mt-1">Review shortlisted candidates for your department and assign interviews.</p>
-        </div>
-
-        <!-- Filter Bar -->
-        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-8">
-            <div class="flex gap-4 mb-4">
-                <div class="flex-grow relative">
-                    <input type="text" placeholder="Search candidate name / job title" class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+    <div class="modal-overlay" id="applicationOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div>
+                    <h2>Application Details</h2>
+                    <p id="applicationSubtitle">Candidate application review</p>
                 </div>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">Search</button>
+                <button class="close-btn" onclick="closeModal('applicationOverlay')">×</button>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Job Title</label>
-                    <select class="w-full p-2 border border-gray-300 rounded-lg bg-white text-sm">
-                        <option>All Jobs</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Interviewer</label>
-                    <select class="w-full p-2 border border-gray-300 rounded-lg bg-white text-sm">
-                        <option>All Interviewers</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-500 uppercase mb-1">Interview Status</label>
-                    <select class="w-full p-2 border border-gray-300 rounded-lg bg-white text-sm">
-                        <option>All Status</option>
-                    </select>
-                </div>
-                <div class="flex items-center">
-                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">Clear Filters</button>
+            <div class="modal-body">
+                <div class="dark-summary" id="applicationSummary"></div>
+                <div class="split-layout">
+                    <div class="panel cv-box" id="cvPanel"></div>
+                    <div class="panel">
+                        <h3>Application Details</h3>
+                        <div class="detail-grid" id="applicationDetailsGrid"></div>
+                        <div class="panel" style="margin-top:14px; padding:14px;">
+                            <h3 style="margin-bottom:10px;">Professional Summary</h3>
+                            <p id="applicationSummaryText" style="margin:0; font-size:14px; color:var(--text); line-height:1.6;"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Table Section -->
-        <div class="overflow-x-auto border border-gray-200 rounded-xl">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Candidate Name</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Applied Job</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Shortlisted On</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Interviewer</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Interview Status</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Assessment</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <!-- Row 1 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-900">Ahmed Khan</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Software Engineer</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">30 Mar 2026</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button class="text-blue-600 hover:underline font-medium">Assign Interviewer</button>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-600">Not Assigned</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button class="text-gray-600 hover:text-blue-600 font-medium">View</button>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-3 py-1 rounded-md transition-colors">View Details</button>
-                        </td>
-                    </tr>
-                    <!-- Row 2 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-900">Sara Ali</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">QA Engineer</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">30 Mar 2026</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Myself</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-700">Pending</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button class="text-gray-600 hover:text-blue-600 font-medium">View</button>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-3 py-1 rounded-md transition-colors">View Details</button>
-                        </td>
-                    </tr>
-                    <!-- Row 3 -->
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-900">Omar Joseph</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Business Analyst</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">29 Mar 2026</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Ali Raza</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-3 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">Completed</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button class="text-gray-600 hover:text-blue-600 font-medium">View</button>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <button class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-3 py-1 rounded-md transition-colors">View Details</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Pagination -->
-        <div class="mt-8 flex items-center justify-between">
-            <button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50">Previous</button>
-            <span class="text-sm text-gray-600">Page <span class="font-semibold">1</span> of <span class="font-semibold">4</span></span>
-            <button class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">Next</button>
         </div>
     </div>
-</div>
 
-<div class="text-center mt-8 text-gray-400 text-sm no-print">
-    Press <kbd class="px-2 py-1 bg-gray-200 rounded text-gray-600 font-mono">Ctrl + P</kbd> to save as PDF for printing.
-</div>
+    <div class="modal-overlay" id="assignOverlay">
+        <div class="modal small">
+            <div class="modal-header">
+                <div>
+                    <h2>Assign Interviewer</h2>
+                    <p id="assignSubtitle">Select interviewer for department review</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('assignOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="dark-summary" id="assignSummary"></div>
+                <div class="note-box">Choose whether the interview will be handled by yourself or by another person in the Engineering Department. You can also leave a clear instruction message for the selected interviewer.</div>
 
+                <div class="form-group">
+                    <label>Assignment Type</label>
+                    <div class="radio-wrap">
+                        <label class="radio-item"><input type="radio" name="assignmentType" checked onchange="toggleDepartmentInterviewer(false)"> Assign to Myself</label>
+                        <label class="radio-item"><input type="radio" name="assignmentType" onchange="toggleDepartmentInterviewer(true)"> Select From Department</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="departmentInterviewerWrap" style="display:none;">
+                    <label>Select Department Interviewer</label>
+                    <select class="field-select">
+                        <option>Eng. Faisal Noor</option>
+                        <option>Eng. Sara Ali</option>
+                        <option>Eng. Omar Khalid</option>
+                        <option>Eng. Mariam Yusuf</option>
+                    </select>
+                </div>
+
+                <div class="form-grid" style="margin-top:14px;">
+                    <div class="form-group">
+                        <label>Interview Type</label>
+                        <select class="field-select">
+                            <option>Technical Interview</option>
+                            <option>Technical + Managerial Interview</option>
+                            <option>Final Technical Review</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Interview Date</label>
+                        <input class="field-input" type="date" value="2026-04-07">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:14px;">
+                    <label>Message / Instruction to Interviewer</label>
+                    <textarea class="textarea">Please review the candidate’s MEP project experience, BIM or coordination capability, communication skills, and fit for the Engineering Department.</textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal('assignOverlay')">Cancel</button>
+                    <button class="btn btn-primary" onclick="showSuccess('Interviewer Assigned', 'The interviewer assignment has been saved for this candidate.')">Save Assignment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="assessmentOverlay">
+        <div class="modal medium">
+            <div class="modal-header">
+                <div>
+                    <h2 id="assessmentTitle">Interview Assessment</h2>
+                    <p id="assessmentSubtitle">Assessment details</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('assessmentOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="dark-summary" id="assessmentSummary"></div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Interviewer</label>
+                        <input class="field-input" id="assessmentInterviewer" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Interview Date</label>
+                        <input class="field-input" id="assessmentDate" type="date">
+                    </div>
+                    <div class="form-group">
+                        <label>Technical Knowledge</label>
+                        <select class="field-select" id="assessmentTech">
+                            <option>Excellent</option>
+                            <option>Good</option>
+                            <option>Average</option>
+                            <option>Below Average</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>MEP / BIM Coordination Skill</label>
+                        <select class="field-select" id="assessmentCoordination">
+                            <option>Excellent</option>
+                            <option>Good</option>
+                            <option>Average</option>
+                            <option>Below Average</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Communication</label>
+                        <select class="field-select" id="assessmentCommunication">
+                            <option>Excellent</option>
+                            <option>Good</option>
+                            <option>Average</option>
+                            <option>Below Average</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Interview Result</label>
+                        <select class="field-select" id="assessmentResult">
+                            <option>Recommended</option>
+                            <option>Rejected</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:14px;">
+                    <label>Assessment Remarks</label>
+                    <textarea class="textarea" id="assessmentRemarks"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal('assessmentOverlay')">Cancel</button>
+                    <button class="btn btn-primary" onclick="showSuccess('Assessment Saved', 'The interview assessment has been saved for this candidate.')">Save Assessment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="sendHrOverlay">
+        <div class="modal small">
+            <div class="modal-header">
+                <div>
+                    <h2>Send to HR</h2>
+                    <p id="sendHrSubtitle">Share department interview outcome with HR</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('sendHrOverlay')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="dark-summary" id="sendHrSummary"></div>
+                <div class="form-group">
+                    <label>Decision</label>
+                    <select class="field-select">
+                        <option>Recommended</option>
+                        <option>Rejected</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-top:14px;">
+                    <label>Message to HR</label>
+                    <textarea class="textarea">Candidate has been reviewed by Engineering Department. Please proceed with the next action based on the interview outcome.</textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal('sendHrOverlay')">Cancel</button>
+                    <button class="btn btn-primary" onclick="showSuccess('Sent to HR', 'The candidate decision has been sent to HR.')">Send to HR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="successOverlay">
+        <div class="modal small">
+            <div class="modal-header">
+                <div>
+                    <h2 id="successTitle">Saved</h2>
+                    <p id="successSubtitle">Action completed</p>
+                </div>
+                <button class="close-btn" onclick="closeModal('successOverlay')">×</button>
+            </div>
+            <div class="modal-body" id="successBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const candidates = {
+            mohammed: {
+                name: "Mohammed Khan",
+                job: "BIM Coordinator",
+                employmentType: "Permanent",
+                organisation: "Menasco",
+                workMode: "Onsite",
+                interviewer: "Myself",
+                status: "Interviewed - Recommended",
+                email: "mohammed.khan@email.com",
+                phone: "+971 50 123 4567",
+                nationality: "Indian",
+                experience: "5 Years",
+                currentLocation: "Dubai, UAE",
+                education: "B.Tech Mechanical Engineering",
+                currentCompany: "Al Noor MEP Contracting LLC",
+                currentRole: "BIM Modeler - MEP",
+                noticePeriod: "30 Days",
+                summary: "Experienced BIM Coordinator with strong MEP coordination background across design and execution stages, including clash detection, model management, and drawing review support.",
+                skills: ["Revit MEP", "Navisworks", "AutoCAD", "BIM 360", "Clash Detection", "Shop Drawings"],
+                experiencePoints: [
+                    "Coordinated MEP BIM models for commercial and residential projects",
+                    "Led clash detection reviews and issued coordination updates",
+                    "Supported engineering and site teams with model-based issue tracking"
+                ],
+                assessment: {
+                    interviewer: "Myself",
+                    date: "2026-04-04",
+                    tech: "Excellent",
+                    coordination: "Excellent",
+                    communication: "Good",
+                    result: "Recommended",
+                    remarks: "Strong BIM coordination profile. Good MEP model understanding and clear communication during technical discussion."
+                },
+                managerRemark: "Strong MEP coordination profile. Suitable for Engineering Department final recommendation."
+            },
+            ayesha: {
+                name: "Ayesha Rahman",
+                job: "MEP Design Engineer",
+                employmentType: "Contract",
+                organisation: "Menasco",
+                workMode: "Onsite",
+                interviewer: "Eng. Faisal Noor",
+                status: "Interviewer Assigned",
+                email: "ayesha.rahman@email.com",
+                phone: "+971 55 245 8901",
+                nationality: "Pakistani",
+                experience: "6 Years",
+                currentLocation: "Abu Dhabi, UAE",
+                education: "B.E Electrical Engineering",
+                currentCompany: "United MEP Solutions",
+                currentRole: "MEP Design Engineer",
+                noticePeriod: "45 Days",
+                summary: "MEP Design Engineer with experience in HVAC, electrical coordination, design review, and technical submittals for commercial projects.",
+                skills: ["HVAC Design", "Load Calculation", "Electrical Coordination", "AutoCAD", "Revit MEP", "Material Submittals"],
+                experiencePoints: [
+                    "Prepared MEP design packages and supported design coordination meetings",
+                    "Reviewed HVAC and electrical layouts for compliance and coordination",
+                    "Worked closely with planning and site teams during execution handover"
+                ],
+                assessment: {
+                    interviewer: "Eng. Faisal Noor",
+                    date: "2026-04-07",
+                    tech: "Good",
+                    coordination: "Good",
+                    communication: "Good",
+                    result: "Recommended",
+                    remarks: "Interview scheduled. Assessment will be finalized after technical discussion."
+                },
+                managerRemark: "Candidate looks suitable for a technical design-focused Engineering role."
+            },
+            bilal: {
+                name: "Bilal Nadeem",
+                job: "Revit Modeler",
+                employmentType: "Permanent",
+                organisation: "Macs",
+                workMode: "Onsite",
+                interviewer: "Myself",
+                status: "Received from HR",
+                email: "bilal.nadeem@email.com",
+                phone: "+971 52 710 3344",
+                nationality: "Bangladeshi",
+                experience: "3 Years",
+                currentLocation: "Sharjah, UAE",
+                education: "Diploma in Mechanical Drafting",
+                currentCompany: "Smart Draft MEP Services",
+                currentRole: "Revit Modeler",
+                noticePeriod: "Immediate",
+                summary: "Revit Modeler with drafting and modeling experience in MEP services, capable of supporting coordinated model development and drawing issue updates.",
+                skills: ["Revit", "AutoCAD", "MEP Drafting", "BOQ Support", "Drawing Updates"],
+                experiencePoints: [
+                    "Produced MEP model updates and coordinated drawing revisions",
+                    "Supported BIM coordinator in clash report closure and issue tracking",
+                    "Prepared shop drawing markups and material quantity support"
+                ],
+                assessment: {
+                    interviewer: "Myself",
+                    date: "2026-04-08",
+                    tech: "Good",
+                    coordination: "Average",
+                    communication: "Good",
+                    result: "Recommended",
+                    remarks: "Assessment not conducted yet. Initial review looks promising for a modeling support role."
+                },
+                managerRemark: "Candidate can be reviewed for model production support in the department."
+            },
+            omar: {
+                name: "Omar Joseph",
+                job: "Site Engineer - MEP",
+                employmentType: "Consultant",
+                organisation: "Menasco",
+                workMode: "Onsite",
+                interviewer: "Eng. Sara Ali",
+                status: "Interviewed - Rejected",
+                email: "omar.joseph@email.com",
+                phone: "+971 56 482 1144",
+                nationality: "Jordanian",
+                experience: "7 Years",
+                currentLocation: "Dubai, UAE",
+                education: "B.Sc Mechanical Engineering",
+                currentCompany: "Cityline Electromechanical Works",
+                currentRole: "MEP Site Engineer",
+                noticePeriod: "30 Days",
+                summary: "Experienced site engineer with project execution and subcontractor coordination background in MEP site activities and inspection follow-up.",
+                skills: ["Site Coordination", "MEP Execution", "Inspection Requests", "Material Follow-up", "Subcontractor Management"],
+                experiencePoints: [
+                    "Handled site execution coordination and subcontractor follow-up",
+                    "Managed MEP progress tracking and daily site issue closure",
+                    "Supported QAQC and engineering teams during inspections"
+                ],
+                assessment: {
+                    interviewer: "Eng. Sara Ali",
+                    date: "2026-04-03",
+                    tech: "Average",
+                    coordination: "Average",
+                    communication: "Average",
+                    result: "Rejected",
+                    remarks: "Candidate has site exposure but did not match the department's current technical expectations for this opening."
+                },
+                managerRemark: "Interview completed. Not recommended for this Engineering opening."
+            }
+        };
+
+        function toggleActionMenu(event, id) {
+            event.stopPropagation();
+            document.querySelectorAll('.action-menu').forEach(menu => {
+                if (menu.id !== id) menu.classList.remove('open');
+            });
+            document.getElementById(id).classList.toggle('open');
+        }
+
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.action-menu').forEach(menu => menu.classList.remove('open'));
+        });
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) overlay.classList.remove('show');
+            });
+        });
+
+        function buildSummaryCard(candidate) {
+            return `
+                <div class="summary-grid">
+                    <div><span class="label">Candidate Name</span><div class="value">${candidate.name}</div></div>
+                    <div><span class="label">Applied Job</span><div class="value">${candidate.job}</div></div>
+                    <div><span class="label">Employment Type</span><div class="value">${candidate.employmentType}</div></div>
+                    <div><span class="label">Organisation</span><div class="value">${candidate.organisation}</div></div>
+                    <div><span class="label">Current Status</span><div class="value">${candidate.status}</div></div>
+                </div>
+                <div class="manager-remark">"${candidate.managerRemark}"</div>
+            `;
+        }
+
+        function openApplicationModal(key) {
+            const c = candidates[key];
+            document.getElementById('applicationSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('applicationSummary').innerHTML = buildSummaryCard(c);
+
+            document.getElementById('cvPanel').innerHTML = `
+                <h3>CV Preview</h3>
+                <div class="cv-section">
+                    <h4>${c.name}</h4>
+                    <p>${c.currentRole} | ${c.currentCompany}</p>
+                    <p>${c.email} | ${c.phone}</p>
+                </div>
+                <div class="cv-section">
+                    <h4>Core Skills</h4>
+                    <ul>${c.skills.map(skill => `<li>${skill}</li>`).join('')}</ul>
+                </div>
+                <div class="cv-section">
+                    <h4>Key Experience</h4>
+                    <ul>${c.experiencePoints.map(item => `<li>${item}</li>`).join('')}</ul>
+                </div>
+                <div class="cv-section">
+                    <h4>Education</h4>
+                    <p>${c.education}</p>
+                </div>
+            `;
+
+            document.getElementById('applicationDetailsGrid').innerHTML = `
+                <div class="detail-item"><span class="label">Candidate Name</span><div class="value">${c.name}</div></div>
+                <div class="detail-item"><span class="label">Applied Job</span><div class="value">${c.job}</div></div>
+                <div class="detail-item"><span class="label">Employment Type</span><div class="value">${c.employmentType}</div></div>
+                <div class="detail-item"><span class="label">Organisation</span><div class="value">${c.organisation}</div></div>
+                <div class="detail-item"><span class="label">Work Mode</span><div class="value">${c.workMode}</div></div>
+                <div class="detail-item"><span class="label">Experience</span><div class="value">${c.experience}</div></div>
+                <div class="detail-item"><span class="label">Current Location</span><div class="value">${c.currentLocation}</div></div>
+                <div class="detail-item"><span class="label">Notice Period</span><div class="value">${c.noticePeriod}</div></div>
+                <div class="detail-item"><span class="label">Education</span><div class="value">${c.education}</div></div>
+                <div class="detail-item"><span class="label">Current Role</span><div class="value">${c.currentRole}</div></div>
+            `;
+            document.getElementById('applicationSummaryText').textContent = c.summary;
+            document.getElementById('applicationOverlay').classList.add('show');
+        }
+
+        function openAssignModal(key) {
+            const c = candidates[key];
+            document.getElementById('assignSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('assignSummary').innerHTML = buildSummaryCard(c);
+            document.getElementById('assignOverlay').classList.add('show');
+        }
+
+        function toggleDepartmentInterviewer(show) {
+            document.getElementById('departmentInterviewerWrap').style.display = show ? 'block' : 'none';
+        }
+
+        function openAssessmentModal(key, mode) {
+            const c = candidates[key];
+            document.getElementById('assessmentTitle').textContent = mode === 'conduct' ? 'Conduct Interview Assessment' : 'View / Edit Assessment';
+            document.getElementById('assessmentSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('assessmentSummary').innerHTML = buildSummaryCard(c);
+            document.getElementById('assessmentInterviewer').value = c.assessment.interviewer;
+            document.getElementById('assessmentDate').value = c.assessment.date;
+            document.getElementById('assessmentTech').value = c.assessment.tech;
+            document.getElementById('assessmentCoordination').value = c.assessment.coordination;
+            document.getElementById('assessmentCommunication').value = c.assessment.communication;
+            document.getElementById('assessmentResult').value = c.assessment.result;
+            document.getElementById('assessmentRemarks').value = c.assessment.remarks;
+            document.getElementById('assessmentOverlay').classList.add('show');
+        }
+
+        function openSendHrModal(key) {
+            const c = candidates[key];
+            document.getElementById('sendHrSubtitle').textContent = c.name + ' - ' + c.job;
+            document.getElementById('sendHrSummary').innerHTML = buildSummaryCard(c);
+            document.getElementById('sendHrOverlay').classList.add('show');
+        }
+
+        function showSuccess(title, message) {
+            ['assignOverlay', 'assessmentOverlay', 'sendHrOverlay'].forEach(id => closeModal(id));
+            document.getElementById('successTitle').textContent = title;
+            document.getElementById('successSubtitle').textContent = 'Department action completed';
+            document.getElementById('successBody').innerHTML = `
+                <div class="note-box" style="margin-bottom:0;">
+                    ${message}
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" onclick="closeModal('successOverlay')">Close</button>
+                </div>
+            `;
+            document.getElementById('successOverlay').classList.add('show');
+        }
+    </script>
 </body>
 </html>
